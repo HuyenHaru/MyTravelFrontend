@@ -1,0 +1,90 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\Admin\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js install
+
+PATH: 
+  C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Users\Admin\AppData\Local\Microsoft\WindowsApps;C:\Users\Admin\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Admin\AppData\Local\GitHubDesktop\bin;C:\Users\Admin\AppData\Roaming\npm
+
+Yarn version: 
+  1.22.4
+
+Node version: 
+  12.16.1
+
+Platform: 
+  win32 x64
+
+Trace: 
+  SyntaxError: F:\front-end-van-ma\video-fe\package.json: Unexpected token / in JSON at position 64
+      at JSON.parse (<anonymous>)
+      at C:\Users\Admin\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (C:\Users\Admin\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:310:30)
+      at C:\Users\Admin\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "admin",
+    "version": "0.1.0",
+    "private": true,
+    // "proxy": "http://66.42.63.229",
+    "dependencies": {
+      "@material-ui/core": "^4.5.1",
+      "@material-ui/icons": "^4.5.1",
+      "@version/react-router-v3": "^1.0.0",
+      "axios": "^0.19.0",
+      "bootstrap": "^4.3.1",
+      "classnames": "^2.2.6",
+      "cors": "^2.8.5",
+      "history": "^4.10.1",
+      "html-react-parser": "^0.9.1",
+      "html-to-react": "^1.4.2",
+      "material-table": "^1.53.0",
+      "prop-types": "^15.7.2",
+      // "proxy": "http://66.42.63.229",
+      "react": "^16.12.0",
+      "react-bootstrap": "^1.0.0-beta.14",
+      "react-dom": "^16.12.0",
+      "react-redux": "^7.1.1",
+      "react-render-html": "^0.6.0",
+      "react-router": "^3.2.5",
+      "react-router-dom": "^5.1.2",
+      "react-scripts": "3.0.1",
+      "redux": "^4.0.4",
+      "redux-form": "^8.2.6",
+      "redux-logger": "^3.0.6",
+      "redux-promise": "^0.6.0",
+      "redux-thunk": "^2.3.0",
+      "video-react": "^0.14.1",
+      "yarn": "^1.22.4"
+    },
+    "scripts": {
+      "start": "react-scripts start",
+      "build": "react-scripts build",
+      "test": "react-scripts test",
+      "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+      "extends": "react-app"
+    },
+    "browserslist": {
+      "production": [
+        ">0.2%",
+        "not dead",
+        "not op_mini all"
+      ],
+      "development": [
+        "last 1 chrome version",
+        "last 1 firefox version",
+        "last 1 safari version"
+      ]
+    },
+    "devDependencies": {
+      "babel-plugin-react-html-attrs": "^2.1.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
