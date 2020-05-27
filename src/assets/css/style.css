@@ -10,7 +10,7 @@ body {
   font-size: 15px;
 }
 
-ul{
+ul {
   padding: 0;
   margin: 0;
 }
@@ -37,12 +37,12 @@ ul li {
   color: orangered;
 }
 .color-yellow {
-  color: #FFBF00;;
+  color: #ffbf00;
 }
 .color-blue {
   color: #209e91;
 }
-.color-grey{
+.color-grey {
   color: #5e5b5b;
 }
 .color-blue1 {
@@ -56,12 +56,13 @@ a {
 }
 a:hover {
   text-decoration: none;
+  color: #209e91;
 }
 /*-------------------------
 1. Side-nav
 -------------------------*/
- /*#region BANNER */
- .igi_banner {
+/*#region BANNER */
+.igi_banner {
   width: 100%;
   height: 100%;
   position: relative;
@@ -74,7 +75,7 @@ a:hover {
   position: relative;
 }
 
-.igi_banner .igi_bn_item .img-bn{
+.igi_banner .igi_bn_item .img-bn {
   width: auto;
   width: 100%;
   height: 500px;
@@ -121,7 +122,6 @@ a:hover {
   padding: 15px;
 }
 
-
 /* #region News */
 .title-content {
   color: #165b6b;
@@ -135,18 +135,6 @@ a:hover {
   font-weight: 700;
 }
 
-.content .img-item {
-  padding-right: 0px;
-}
-
-.item {
-    margin-bottom: 30px;
-}
-
-.img-item img {
-  max-width: 100%;
-}
-
 .item-content {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -155,21 +143,23 @@ a:hover {
   -webkit-box-orient: vertical;
 }
 
-.border-bottom {
-    margin: 15px 0;
-}
 .view-detail {
-    color : #8d8a8a
-}
-.pl-room {
-    padding-left: 11px;
+  color: #8d8a8a;
 }
 
 .link-news {
   font-size: 22px;
+  margin-top: 15px;
+  font-weight: 600;
 }
-
-.divContent{
+.news-list .img-news img {
+  border-radius: 20px;
+  opacity: 0.85;
+}
+.news-list .img-news:hover img {
+  opacity: 1;
+}
+.divContent {
   margin-top: 20px;
 }
 
@@ -179,7 +169,7 @@ a:hover {
   font-weight: 700;
 }
 
-.divContent .divCon-title{
+.divContent .divCon-title {
   font-weight: 600;
   margin-bottom: 10px;
 }
@@ -192,7 +182,7 @@ a:hover {
   max-width: 100%;
   margin-bottom: 20px;
 }
-.mt{
+.mt {
   margin-top: 20px;
 }
 .content_slide {
@@ -244,11 +234,11 @@ a:hover {
 
 /* #region Tin tức home */
 .news {
-  background: url('./images/anh-lua.jpg') no-repeat;
+  background: url("./images/anh-lua.jpg") no-repeat;
   padding: 30px 0;
   opacity: 0.9;
 }
-.news .title-news{
+.news .title-news {
   font-size: 25px;
   font-weight: 700;
   color: #fff;
@@ -266,15 +256,15 @@ a:hover {
   object-fit: cover;
   transition: all 300ms ease-in 0ms;
 }
-.news-home .img-news:hover img{
+.news-home .img-news:hover img {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
-.listnews-home .img-news img{
+.listnews-home .img-news img {
   opacity: 0.7;
   height: 400px;
 }
-.news-home .img-news .link-news{
+.news-home .img-news .link-news {
   position: absolute;
   bottom: 10px;
   left: 10px;
@@ -292,3 +282,24 @@ a:hover {
   text-align: center;
 }
 /* #endregion Tin tức home */
+
+/* #region Login */
+.login {
+  position: relative;
+  background: url("./images/hue.jpg") no-repeat;
+  margin: 0 auto;
+  height: 400px;
+  width: 800px;
+}
+
+.login form {
+  margin: 0 auto;
+  width: 500px;
+  height: 400px;
+  /* border: 1px solid #209e91; */
+  padding: 100px 20px;
+  /* background: url("./images/hue.jpg") no-repeat 100%; */
+  /* top: 30%;
+  left: 40%; */
+}
+/* #endregion Login */
