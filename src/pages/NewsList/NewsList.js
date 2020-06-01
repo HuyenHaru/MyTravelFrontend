@@ -8,10 +8,10 @@ const ItemPost = ({ post }) => (
   <Col xs="12" sm="6" md="4" lg="4">
     <Link to={`/danh-sach-tin-tuc/${post.id}`} className="img-news">
       <img className="img-respon" src="./../../assets/images/lq1.png" />
-      <h2 class="link-news">{post.title}</h2>
+      <h2 className="link-news">{post.title}</h2>
     </Link>
-    <div class="item-content">{post.short_des}</div>
-    <Link to={`/danh-sach-tin-tuc/${post.id}`} class="view-detail">
+    <div className="item-content">{post.short_des}</div>
+    <Link to={`/danh-sach-tin-tuc/${post.id}`} className="view-detail">
       View detail [+]
     </Link>
   </Col>

@@ -66,5 +66,5 @@ export const getAuthUser = (token) => (dispatch) => {
 };
 export const logout = () => (dispatch) => {
   localStorage.removeItem("token");
-  dispatch({ type: SET_AUTH_USER, payload: { user: null } });
+  dispatch({ type: SET_AUTH_USER, payload: { user: {} } });
 };

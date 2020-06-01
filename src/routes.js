@@ -4,6 +4,7 @@ import NewsList from "./pages/NewsList/NewsList";
 import PostDetail from "./pages/PostDetail/PostDetail";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
+import MyAccount from "./pages/MyAccount/MyAccount";
 const routes = [
   {
     path: "/",
@@ -29,6 +30,11 @@ const routes = [
     path: "/dang-ky",
     exact: true,
     main: () => <Register />,
+  },
+  {
+    path: "/tai-khoan",
+    exact: true,
+    main: () => <MyAccount />,
   },
 ];
 // const mapStateToProps = state =>{

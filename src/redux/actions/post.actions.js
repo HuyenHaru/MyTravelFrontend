@@ -3,7 +3,7 @@ import { GET_POSTS, GET_POST } from "../constants/post.constant";
 
 export const fetchPosts = () => (dispatch) => {
   axios
-    .get("http://localhost:8080/posts")
+    .get("http://localhost:5000/posts")
     .then((res) => {
       const posts = res.data.data;
       dispatch({ type: GET_POSTS, payload: { posts } });
@@ -15,7 +15,7 @@ export const fetchPosts = () => (dispatch) => {
 
 export const fetchPost = (id) => (dispatch) => {
   axios
-    .get(`http://localhost:8080/posts/${id}`)
+    .get(`http://localhost:5000/posts/${id}`)
     .then((res) => {
       console.log(res);
       const post = res.data;
