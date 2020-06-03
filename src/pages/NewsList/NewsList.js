@@ -3,19 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { fetchPosts } from "../../redux/actions/post.actions";
 import { Container, Row, Col } from "reactstrap";
-
-const ItemPost = ({ post }) => (
-  <Col xs="12" sm="6" md="4" lg="4">
-    <Link to={`/danh-sach-tin-tuc/${post.id}`} className="img-news">
-      <img className="img-respon" src="./../../assets/images/lq1.png" />
-      <h2 className="link-news">{post.title}</h2>
-    </Link>
-    <div className="item-content">{post.short_des}</div>
-    <Link to={`/danh-sach-tin-tuc/${post.id}`} className="view-detail">
-      View detail [+]
-    </Link>
-  </Col>
-);
+import ItemPost from "../Components/ItemPost/ItemPost";
 
 const NewsList = (props) => {
   const dispatch = useDispatch();

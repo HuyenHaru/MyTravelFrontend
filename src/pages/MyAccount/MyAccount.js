@@ -3,7 +3,15 @@ import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Sidebar from "../Components/Sidebar/Sidebar";
 import ModalChargePass from "../Components/ModalChargePass/ModalChargePass";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPostProfile } from "../../redux/actions/post.actions";
+import ItemPost from "../Components/ItemPost/ItemPost";
 const MyAccount = (props) => {
+  const dispatch = useDispatch();
+  const { posts } = useSelector((state) => state.post);
+  useEffect(() => {
+    dispatch(fetchPostProfile());
+  }, []);
   return (
     <div className="my-account">
       <Container>
@@ -92,60 +100,11 @@ const MyAccount = (props) => {
             <div className="news-list mt-5">
               <h2 className="title-profile">Bài viết của tôi</h2>
               <Row>
-                <Col xs="12" sm="6" md="4" lg="4">
-                  <Link to="" className="img-news">
-                    <img
-                      className="img-respon"
-                      src="./../../assets/images/lq1.png"
-                    />
-                    <h2 className="link-news">
-                      Trải nghiệm Đà Nẵng 4 ngày 3 đêm
-                    </h2>
-                  </Link>
-                  <div className="item-content">
-                    Du lịch Đã Nẵng mùa nào thì sẽ đẹp, chúng ta đều thấy mỗi
-                    mùa thì Đà Nẵng sẽ mang một vẻ đẹp khác nhau
-                  </div>
-                  <Link to="" className="view-detail">
-                    View detail [+]
-                  </Link>
-                </Col>
-                <Col xs="12" sm="6" md="4" lg="4">
-                  <Link to="" className="img-news">
-                    <img
-                      className="img-respon"
-                      src="./../../assets/images/lq1.png"
-                    />
-                    <h2 className="link-news">
-                      Trải nghiệm Đà Nẵng 4 ngày 3 đêm
-                    </h2>
-                  </Link>
-                  <div className="item-content">
-                    Du lịch Đã Nẵng mùa nào thì sẽ đẹp, chúng ta đều thấy mỗi
-                    mùa thì Đà Nẵng sẽ mang một vẻ đẹp khác nhau
-                  </div>
-                  <Link to="" className="view-detail">
-                    View detail [+]
-                  </Link>
-                </Col>
-                <Col xs="12" sm="6" md="4" lg="4">
-                  <Link to="" className="img-news">
-                    <img
-                      className="img-respon"
-                      src="./../../assets/images/lq1.png"
-                    />
-                    <h2 className="link-news">
-                      Trải nghiệm Đà Nẵng 4 ngày 3 đêm
-                    </h2>
-                  </Link>
-                  <div className="item-content">
-                    Du lịch Đã Nẵng mùa nào thì sẽ đẹp, chúng ta đều thấy mỗi
-                    mùa thì Đà Nẵng sẽ mang một vẻ đẹp khác nhau
-                  </div>
-                  <Link to="" className="view-detail">
-                    View detail [+]
-                  </Link>
-                </Col>
+                {posts && posts.length > 0 ? (
+                  posts.map((post) => <ItemPost post={post} key={post._id} />)
+                ) : (
+                  <div>Bạn chưa có bài viết nào</div>
+                )}
               </Row>
             </div>
           </Col>

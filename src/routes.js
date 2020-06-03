@@ -12,12 +12,12 @@ const routes = [
     main: () => <Home />,
   },
   {
-    path: "/danh-sach-tin-tuc",
+    path: "/cam-nang-du-lich",
     exact: true,
     main: () => <NewsList />,
   },
   {
-    path: "/danh-sach-tin-tuc/:id",
+    path: "/cam-nang-du-lich/:id",
     exact: true,
     main: () => <PostDetail />,
   },
