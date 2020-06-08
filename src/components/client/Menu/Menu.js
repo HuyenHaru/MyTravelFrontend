@@ -10,7 +10,7 @@ const Menubar = () => {
   const handleLogout = () => {
     dispatch(logout());
   };
-  console.log(authUser);
+
   return (
     <div className="header">
       <Container>
@@ -42,6 +42,7 @@ const Menubar = () => {
                     </NavDropdown.Item>
                   </NavDropdown>
                   <Nav.Link as={NavLink} to="/viet-bai">
+                    <i className="fas fa-edit"></i>
                     Viết bài
                   </Nav.Link>
                 </Fragment>
@@ -72,6 +73,7 @@ const Menubar = () => {
           </Navbar.Collapse>
         </Navbar>
       </Container>
+      <div className="clearfix"></div>
     </div>
   );
 };

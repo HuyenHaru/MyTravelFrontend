@@ -2,7 +2,7 @@
   top: 0;
   width: 100%;
   background: rgba(255, 255, 255, 1);
-  position: relative;
+  position: sticky;
   left: 0;
   z-index: 100;
   box-shadow: 0px 0px 5px 0px #6dd1e7;
@@ -20,12 +20,15 @@
     font-weight: 600;
     padding: 10px 20px;
     border-bottom: 3px solid rgba(255, 255, 255, 0.01);
-  }
-  .navbar .navbar-nav .nav-item .menu-link:hover,
-  .navbar .navbar-nav .active {
-    color: #25cdaf;
-    font-weight: 600;
   } */
+.navbar-light .navbar-nav .nav-link {
+  font-weight: 600;
+}
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link.active {
+  color: #25cdaf;
+  font-weight: 600;
+}
 
 .search-form {
   display: flex;

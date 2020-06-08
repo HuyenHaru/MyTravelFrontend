@@ -48,9 +48,7 @@ ul li {
 .color-blue1 {
   color: #3294da;
 }
-.mobile {
-  display: none;
-}
+
 a {
   color: #333;
 }
@@ -62,6 +60,11 @@ a:hover {
   color: #209e91 !important;
   cursor: pointer;
 }
+
+/* .main-page {
+  margin-top: 60px;
+  position: relative;
+} */
 /*-------------------------
 1. Side-nav
 -------------------------*/
@@ -125,8 +128,24 @@ a:hover {
   height: auto;
   padding: 15px;
 }
-
+/* #endregion banner */
 /* #region News */
+.module-banner {
+  position: relative;
+}
+
+.title-bn {
+  position: absolute;
+  top: 40%;
+  text-align: center;
+  left: 30%;
+  color: #fff;
+}
+.title-bn h2 {
+  font-size: 50px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
 .title-content {
   color: #165b6b;
   font-weight: 600;
@@ -167,34 +186,27 @@ a:hover {
   margin-top: 20px;
 }
 
-.divContent .title-room {
+.divContent h1 {
   color: #165b6b;
   font-size: 25px;
   font-weight: 700;
 }
 
-.divContent .divCon-title {
+.divContent h2 {
   font-weight: 600;
   margin-bottom: 10px;
 }
 
 .divContent p {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
-.divContent .img-divCon img {
+.divContent img {
   max-width: 100%;
-  margin-bottom: 20px;
-}
-.mt {
-  margin-top: 20px;
-}
-.content_slide {
-  margin-top: 15px;
-  line-height: 1.5;
-  font-weight: 600;
+  margin-bottom: 10px;
 }
 
+/* #endregion news */
 /* #region GIOI THIEU */
 .paci-font {
   font-family: "Dancing Script";
@@ -300,6 +312,7 @@ a:hover {
   margin: 0 auto;
   width: 500px;
   height: 400px;
+  position: relative;
   padding: 100px 20px;
 }
 /* #endregion Login */
@@ -395,3 +408,28 @@ a:hover {
   -webkit-box-orient: vertical;
 }
 /* #endregion */
+
+/* #region CreatePost */
+
+.create-post .banner-post img {
+  width: 100%;
+  max-width: 100%;
+  height: 450px;
+}
+.create-post .title-post {
+  color: #165b6b;
+  font-weight: 600;
+  font-weight: 20px;
+  margin: 20px 0;
+}
+.create-post .form-control.form-title-post {
+  font-weight: 600;
+}
+/* #endregion CreatePost */
+
+/* error */
+.error.show {
+  position: absolute;
+  top: 10%;
+  width: 92%;
+}

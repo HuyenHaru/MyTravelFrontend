@@ -5,6 +5,8 @@ import PostDetail from "./pages/PostDetail/PostDetail";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import MyAccount from "./pages/MyAccount/MyAccount";
+import MyTrip from "./pages/MyTrip/MyTrip";
+import CreatePost from "./pages/CreatePost/CreatePost";
 const routes = [
   {
     path: "/",
@@ -35,6 +37,16 @@ const routes = [
     path: "/tai-khoan",
     exact: true,
     main: () => <MyAccount />,
+  },
+  {
+    path: "/lich-trinh",
+    exact: true,
+    main: () => <MyTrip />,
+  },
+  {
+    path: "/viet-bai",
+    exact: true,
+    main: () => <CreatePost />,
   },
 ];
 // const mapStateToProps = state =>{

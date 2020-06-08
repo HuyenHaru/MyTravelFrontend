@@ -1,12 +1,19 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { login } from "../../redux/actions/user.actions";
-import { InputGroup, FormControl } from "react-bootstrap";
+import {
+  InputGroup,
+  FormControl,
+  Alert,
+  Spinner,
+  Button,
+} from "react-bootstrap";
 
 const Login = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { loading, actionType, error } = useSelector((state) => state.async);
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -28,9 +35,27 @@ const Login = () => {
     };
     dispatch(login(user, history));
   };
+
+  const loginLoading = actionType === "login" ? loading : false;
+
   return (
     <div className="login">
       <form onSubmit={handleSubmit}>
+        {error && error.error && error.error.email && (
+          <Alert className="error" variant="danger">
+            {error.error.email.msg}
+          </Alert>
+        )}
+        {error && error.password && (
+          <Alert className="error" variant="danger">
+            {error.password.msg}
+          </Alert>
+        )}
+        {error && error.general && error.general.msg && (
+          <Alert className="error" variant="danger">
+            {error.general.msg}
+          </Alert>
+        )}
         <InputGroup className="mb-3">
           <InputGroup.Prepend>
             <InputGroup.Text id="basic-addon1">
@@ -39,7 +64,6 @@ const Login = () => {
           </InputGroup.Prepend>
           <FormControl
             placeholder="Email"
-            type="email"
             aria-label="Email"
             name="email"
             aria-describedby="basic-addon1"
@@ -63,9 +87,10 @@ const Login = () => {
           />
         </InputGroup>
 
-        <button type="submit" className="btn btn-danger fr">
+        <Button type="submit">
+          {loginLoading && <Spinner animation="border" variant="primary" />}
           Đăng nhập
-        </button>
+        </Button>
       </form>
     </div>
   );
