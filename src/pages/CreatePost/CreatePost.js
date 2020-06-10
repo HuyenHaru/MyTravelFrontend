@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import {
   Container,
   InputGroup,
@@ -9,7 +9,11 @@ import {
   Spinner,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { createPost } from "../../redux/actions/post.actions";
+import {
+  createPost,
+  fetchPost,
+  clearPost,
+} from "../../redux/actions/post.actions";
 import ReactQuill from "react-quill";
 
 const modules = {
@@ -53,14 +57,32 @@ const CreatePost = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { loading, actionType } = useSelector((state) => state.async);
+  const { currentPost } = useSelector((state) => state.post);
   const [state, setState] = useState({
     title: "",
     content: "",
     image: "",
   });
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchPost(id));
+    }
+
+    return () => {
+      dispatch(clearPost());
+      setState({
+        title: "",
+        content: "<p></p>",
+        image: "",
+      });
+    };
+  }, [id]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(state);
     dispatch(createPost(state, history));
   };
 
@@ -73,10 +95,10 @@ const CreatePost = () => {
   };
   const handleImageChange = (e) => {
     setState({ ...state, image: e.target.files[0] });
-    // console.log(e.target.files[0]);
   };
 
   const loginLoading = actionType === "createPost" ? loading : false;
+  console.log(state);
   return (
     <div className="create-post">
       <Container>
@@ -91,10 +113,14 @@ const CreatePost = () => {
             className="form-title-post"
             placeholder="Tựa đề hay gây ấn tượng cho người đọc"
             name="title"
-            value={state.title}
+            value={currentPost ? currentPost.title : state.title}
             onChange={handleChange}
+            defaultValue={currentPost ? currentPost.title : ""}
           />
           <InputGroup className="mt-3">
+            {currentPost && (
+              <img className="img-respon" src={currentPost.mainPhoto} />
+            )}
             <FormControl
               type="file"
               name="image"
@@ -103,11 +129,6 @@ const CreatePost = () => {
               placeholder="Chọn ảnh đại diện cho bài viết"
               aria-label="Chọn ảnh đại diện cho bài viết"
             />
-            {/* <InputGroup.Append>
-              <Button  className="form-title-post" variant="outline-info">
-                Upload
-              </Button>
-            </InputGroup.Append> */}
           </InputGroup>
           <div className="">
             <p className="title-post">Nội dung bài viết</p>
@@ -118,6 +139,7 @@ const CreatePost = () => {
               value={state.content}
               modules={modules}
               formats={formats}
+              // defaultValue={currentPost ? currentPost.content : ""}
               bounds={".app"}
               placeholder="Write something..."
             />

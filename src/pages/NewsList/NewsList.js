@@ -5,11 +5,12 @@ import { fetchPosts } from "../../redux/actions/post.actions";
 import { Container, Row, Col } from "reactstrap";
 import ItemPost from "../Components/ItemPost/ItemPost";
 import BannerPost from "../Components/ItemPost/BannerPost";
-import { Carousel } from "react-bootstrap";
+import { Carousel } from "antd";
 
 const NewsList = (props) => {
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.post);
+  const [postsCarousel, setPostsCarousel] = useState([]);
   const [index, setIndex] = useState(0);
 
   const handleSelect = (selectedIndex, e) => {
@@ -20,6 +21,12 @@ const NewsList = (props) => {
     dispatch(fetchPosts());
   }, []);
 
+  useEffect(() => {
+    if (posts && posts.length && postsCarousel.length === 0) {
+      setPostsCarousel(posts);
+    }
+  }, [posts]);
+
   // console.log(posts);
   return (
     <div className="main-wrap">
@@ -27,7 +34,7 @@ const NewsList = (props) => {
       <div className="module-banner">
         <img
           className="img-respon img-banner"
-          src="./../../assets/images/banner.jpg"
+          src="./../../assets/images/banner-post.jpg"
           alt=""
         />
         <div className="title-bn">
@@ -38,9 +45,14 @@ const NewsList = (props) => {
       {/* NOI DUNG */}
       <div className="igi_module news-list">
         <Container>
-          <Carousel activeIndex={index} onSelect={handleSelect}>
+          {/* <Carousel activeIndex={index} onSelect={handleSelect}>
             {posts &&
               posts.map((post) => <BannerPost post={post} key={post._id} />)}
+          </Carousel> */}
+          <Carousel autoplay>
+            {postsCarousel.map((post) => (
+              <BannerPost post={post} key={post._id} />
+            ))}
           </Carousel>
           <Row>
             {posts &&

@@ -5,6 +5,8 @@
     4. Phụ kiên
     5.Giay, dep, tui ví
 */
+/* @import "antd/dist/antd.css"; */
+
 body {
   font-family: "Montserrat", sans-serif;
   font-size: 15px;
@@ -60,7 +62,9 @@ a:hover {
   color: #209e91 !important;
   cursor: pointer;
 }
-
+.img-border {
+  border-radius: 20px;
+}
 /* .main-page {
   margin-top: 60px;
   position: relative;
@@ -133,16 +137,19 @@ a:hover {
 .module-banner {
   position: relative;
 }
-
+.img-banner {
+  width: 100%;
+  height: 300px;
+}
 .title-bn {
   position: absolute;
   top: 40%;
-  text-align: center;
-  left: 30%;
+  text-align: left;
+  left: 10%;
   color: #fff;
 }
 .title-bn h2 {
-  font-size: 50px;
+  font-size: 40px;
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -427,6 +434,20 @@ a:hover {
 }
 /* #endregion CreatePost */
 
+/* #region Post Liên quan */
+.post-lq {
+  margin: 20px 0;
+}
+.post-lq .react-multi-carousel-list button {
+  outline: none;
+}
+/* #endregion Post Liên quan */
+
+/*#region my-trip */
+.content-trip {
+  margin-top: 15px;
+}
+/*#endregion my-trip  */
 /* error */
 .error.show {
   position: absolute;

@@ -48,6 +48,11 @@ const routes = [
     exact: true,
     main: () => <CreatePost />,
   },
+  {
+    path: "/chinh-sua-bai-viet/:id",
+    exact: true,
+    main: () => <CreatePost />,
+  },
 ];
 // const mapStateToProps = state =>{
 //     return{

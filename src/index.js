@@ -6,6 +6,7 @@ import "./../node_modules/video-react/dist/video-react.css"; // import css
 import App from "./App";
 import serviceWorker from "./serviceWorker";
 import store from "./redux/store";
+import "antd/dist/antd.css";
 
 ReactDOM.render(
   <Provider store={store}>

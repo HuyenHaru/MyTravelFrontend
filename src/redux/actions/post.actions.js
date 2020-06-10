@@ -1,5 +1,10 @@
 import axios from "axios";
-import { GET_POSTS, GET_POST, ADD_POST } from "../constants/post.constant";
+import {
+  GET_POSTS,
+  GET_POST,
+  ADD_POST,
+  CLEAR_POST,
+} from "../constants/post.constant";
 import {
   asyncActionStart,
   asyncActionFinish,
@@ -81,3 +86,5 @@ export const createPost = (post, history) => (dispatch) => {
       dispatch(asyncActionError());
     });
 };
+
+export const clearPost = () => ({ type: CLEAR_POST });

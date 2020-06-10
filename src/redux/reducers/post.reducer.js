@@ -1,8 +1,13 @@
-import { GET_POSTS, GET_POST, ADD_POST } from "../constants/post.constant";
+import {
+  GET_POSTS,
+  GET_POST,
+  ADD_POST,
+  CLEAR_POST,
+} from "../constants/post.constant";
 
 const initState = {
   posts: [],
-  currentPost: {},
+  currentPost: null,
 };
 
 const postReducer = (state = initState, { type, payload }) => {
@@ -23,6 +28,11 @@ const postReducer = (state = initState, { type, payload }) => {
         ...state,
         posts: [...state.posts, payload.post],
         currentPost: payload.post,
+      };
+    case CLEAR_POST:
+      return {
+        ...state,
+        currentPost: null,
       };
     default:
       return state;
