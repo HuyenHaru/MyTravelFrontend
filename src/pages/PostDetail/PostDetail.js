@@ -1,26 +1,29 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPost, fetchPosts } from "../../redux/actions/post.actions";
-import { Container, Row, Col } from "reactstrap";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
-import ItemSlide from "../Components/ItemPost/ItemSlide";
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPost, fetchPosts } from '../../redux/actions/post.actions';
+import { Container } from 'reactstrap';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+import ItemSlide from '../Components/ItemPost/ItemSlide';
 
 const PostDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { currentPost, posts } = useSelector((state) => state.post);
-  // const deviceType = (result.device && result.device.type) || "desktop";
-  // console.log(currentPost);
+  const { currentPost, posts } = useSelector(state => state.post);
 
   useEffect(() => {
     if (id) {
       dispatch(fetchPost(id));
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+
   useEffect(() => {
     dispatch(fetchPosts());
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const responsive = {
@@ -40,27 +43,28 @@ const PostDetail = () => {
       paritialVisibilityGutter: 30,
     },
   };
+
   return (
-    <div className="detail-post">
+    <div className='detail-post'>
       {/*Module Banner*/}
-      <div className="module-banner">
+      <div className='module-banner'>
         <img
-          className="img-respon img-banner"
+          className='img-respon img-banner'
           src={currentPost.mainPhoto}
-          alt=""
+          alt=''
         />
 
-        <div className="title-bn">
+        <div className='title-bn'>
           <h2>{currentPost.title}</h2>
           <div>
-            Trang chủ &nbsp;<i class="fas fa-angle-double-right"></i>&nbsp; Cẩm
-            nang du lịch &nbsp;<i class="fas fa-angle-double-right"></i>&nbsp;{" "}
+            Trang chủ &nbsp;<i class='fas fa-angle-double-right'></i>&nbsp; Cẩm
+            nang du lịch &nbsp;<i class='fas fa-angle-double-right'></i>&nbsp;{' '}
             {currentPost.title}
           </div>
         </div>
       </div>
       <Container>
-        <div className="divContent">
+        <div className='divContent'>
           <div dangerouslySetInnerHTML={{ __html: currentPost.content }}></div>
         </div>
         {/* <Row>
@@ -72,15 +76,15 @@ const PostDetail = () => {
             <Sidebar />
           </Col>
         </Row> */}
-        <div className="post-lq">
-          <h2 class="title-profile">Bài viết liên quan</h2>
+        <div className='post-lq'>
+          <h2 class='title-profile'>Bài viết liên quan</h2>
           <Carousel
             ssr
             partialVisbile
-            itemClass="image-item"
+            itemClass='image-item'
             responsive={responsive}
           >
-            {posts.slice(0, 5).map((post) => {
+            {posts.slice(0, 5).map(post => {
               return <ItemSlide post={post} key={post._id} />;
             })}
           </Carousel>
