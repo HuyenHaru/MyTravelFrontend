@@ -44,40 +44,31 @@ const PostDetail = () => {
     },
   };
 
+  const { mainPhoto = '', title = '', content = '' } = currentPost
+    ? currentPost
+    : {};
+
   return (
     <div className='detail-post'>
       {/*Module Banner*/}
       <div className='module-banner'>
-        <img
-          className='img-respon img-banner'
-          src={currentPost.mainPhoto}
-          alt=''
-        />
+        <img className='img-respon img-banner' src={mainPhoto} alt='' />
 
         <div className='title-bn'>
-          <h2>{currentPost.title}</h2>
+          <h2>{title}</h2>
           <div>
-            Trang chủ &nbsp;<i class='fas fa-angle-double-right'></i>&nbsp; Cẩm
-            nang du lịch &nbsp;<i class='fas fa-angle-double-right'></i>&nbsp;{' '}
-            {currentPost.title}
+            Trang chủ &nbsp;<i className='fas fa-angle-double-right'></i>&nbsp;
+            Cẩm nang du lịch &nbsp;<i className='fas fa-angle-double-right'></i>
+            &nbsp; {title}
           </div>
         </div>
       </div>
       <Container>
         <div className='divContent'>
-          <div dangerouslySetInnerHTML={{ __html: currentPost.content }}></div>
+          <div dangerouslySetInnerHTML={{ __html: content }}></div>
         </div>
-        {/* <Row>
-          <Col xs="12" sm="12" md="9" lg="9">
-          
-            
-          </Col>
-          <Col xs="12" sm="12" md="3" lg="3">
-            <Sidebar />
-          </Col>
-        </Row> */}
         <div className='post-lq'>
-          <h2 class='title-profile'>Bài viết liên quan</h2>
+          <h2 className='title-profile'>Bài viết liên quan</h2>
           <Carousel
             ssr
             partialVisbile

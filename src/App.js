@@ -4,11 +4,13 @@ import './assets/css/style.css';
 import './assets/css/header.css';
 import './assets/css/footer.css';
 import './assets/css/responsive.css';
+import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
 import routes from './routes';
 import Menu from './components/client/Menu/Menu';
 import Footer from './components/client/Footer/Footer';
 import { getAuthUser } from './redux/actions/user.actions';
+import Toastr from './components/client/common/Toastr';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -41,6 +43,7 @@ export default function App() {
   return (
     <div className='wrapper'>
       <Router>
+        <Toastr />
         <Menu />
         <main className='main-page'>
           {/* <Sidebar/> */}

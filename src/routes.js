@@ -1,57 +1,57 @@
-import React from "react";
-import Home from "./pages/Home/Home";
-import NewsList from "./pages/NewsList/NewsList";
-import PostDetail from "./pages/PostDetail/PostDetail";
-import Login from "./pages/Login/Login";
-import Register from "./pages/Register/Register";
-import MyAccount from "./pages/MyAccount/MyAccount";
-import MyTrip from "./pages/MyTrip/MyTrip";
-import CreatePost from "./pages/CreatePost/CreatePost";
+import React from 'react';
+import Home from './pages/Home/Home';
+import NewsList from './pages/NewsList/NewsList';
+import PostDetail from './pages/PostDetail/PostDetail';
+import Login from './pages/Login/Login';
+import Register from './pages/Register/Register';
+import MyAccount from './pages/MyAccount/MyAccount';
+import MyTrip from './pages/MyTrip/MyTrip';
+import PostAction from './pages/PostAction/PostAction';
 const routes = [
   {
-    path: "/",
+    path: '/',
     exact: true,
     main: () => <Home />,
   },
   {
-    path: "/cam-nang-du-lich",
+    path: '/cam-nang-du-lich',
     exact: true,
     main: () => <NewsList />,
   },
   {
-    path: "/cam-nang-du-lich/:id",
+    path: '/cam-nang-du-lich/:id',
     exact: true,
     main: () => <PostDetail />,
   },
   {
-    path: "/dang-nhap",
+    path: '/dang-nhap',
     exact: true,
     main: () => <Login />,
   },
   {
-    path: "/dang-ky",
+    path: '/dang-ky',
     exact: true,
     main: () => <Register />,
   },
   {
-    path: "/tai-khoan",
+    path: '/tai-khoan',
     exact: true,
     main: () => <MyAccount />,
   },
   {
-    path: "/lich-trinh",
+    path: '/lich-trinh',
     exact: true,
     main: () => <MyTrip />,
   },
   {
-    path: "/viet-bai",
+    path: '/viet-bai',
     exact: true,
-    main: () => <CreatePost />,
+    main: () => <PostAction />,
   },
   {
-    path: "/chinh-sua-bai-viet/:id",
+    path: '/chinh-sua-bai-viet/:id',
     exact: true,
-    main: () => <CreatePost />,
+    main: () => <PostAction />,
   },
 ];
 // const mapStateToProps = state =>{

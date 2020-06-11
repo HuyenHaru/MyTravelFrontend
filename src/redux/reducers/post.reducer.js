@@ -3,7 +3,8 @@ import {
   GET_POST,
   ADD_POST,
   CLEAR_POST,
-} from "../constants/post.constant";
+  UPDATE_POST,
+} from '../constants/post.constant';
 
 const initState = {
   posts: [],
@@ -28,6 +29,13 @@ const postReducer = (state = initState, { type, payload }) => {
         ...state,
         posts: [...state.posts, payload.post],
         currentPost: payload.post,
+      };
+    case UPDATE_POST:
+      return {
+        ...state,
+        posts: state.posts.map(post =>
+          post._id === payload.post._id ? payload.post : post
+        ),
       };
     case CLEAR_POST:
       return {
