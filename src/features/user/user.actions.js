@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SET_AUTH_USER } from './user.constant';
+import { SET_AUTH_USER, LOGOUT } from './user.constant';
 import {
   asyncActionStart,
   asyncActionFinish,
@@ -76,5 +76,6 @@ export const getAuthUser = token => dispatch => {
 };
 export const logout = () => dispatch => {
   localStorage.removeItem('token');
-  dispatch({ type: SET_AUTH_USER, payload: { user: {} } });
+  // dispatch({ type: SET_AUTH_USER, payload: { user: {} } });
+  dispatch({ type: LOGOUT });
 };

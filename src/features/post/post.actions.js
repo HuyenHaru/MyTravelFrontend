@@ -12,7 +12,7 @@ import {
   asyncActionFinish,
   asyncActionError,
 } from '../async/async.actions';
-import { actionTypes } from '../../config/config';
+import { actionTypes } from '../../app/utils/config';
 
 export const fetchPosts = () => dispatch => {
   dispatch(asyncActionStart(actionTypes.post.FETCH_POSTS));
@@ -43,7 +43,7 @@ export const fetchPost = id => dispatch => {
       dispatch(asyncActionFinish());
     })
     .catch(err => {
-      console.log(err.response.data);
+      // console.log(err.response.data);
       dispatch(asyncActionError());
     });
 };

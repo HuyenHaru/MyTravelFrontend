@@ -5,9 +5,9 @@ import { Form, Input, Upload, Button, Spin } from 'antd';
 import ReactQuill from 'react-quill';
 import { UploadOutlined } from '@ant-design/icons';
 
-import { textEditorConfig } from '../../../config/config';
+import { textEditorConfig } from '../../../app/utils/config';
 import { createPost, fetchPost, clearPost, updatePost } from '../post.actions';
-import { actionTypes } from '../../../config/config';
+import { actionTypes } from '../../../app/utils/config';
 import { Container } from 'react-bootstrap';
 
 const PostAction = props => {

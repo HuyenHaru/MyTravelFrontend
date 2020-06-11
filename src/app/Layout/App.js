@@ -6,11 +6,20 @@ import '../../assets/css/footer.css';
 import '../../assets/css/responsive.css';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
-import routes from '../../routes';
+
 import Menu from '../../features/navbar/Menu';
 import Footer from './Footer';
 import { getAuthUser } from '../../features/user/user.actions';
 import Toastr from './common/Toastr';
+import Home from '../../features/home/Home';
+import NewsList from '../../features/post/NewsList/NewsList';
+import PostDetail from '../../features/post/PostDetailed/PostDetail';
+import Login from '../../features/user/Login/Login';
+import Register from '../../features/user/Register/Register';
+import PrivateRoute from './common/PrivateRoute';
+import MyAccount from '../../features/user/MyAccount/MyAccount';
+import MyTrip from '../../features/user/MyTrip/MyTrip';
+import PostAction from '../../features/post/PostAction/PostAction';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -23,22 +32,6 @@ export default function App() {
 
     // eslint-disable-next-line
   }, []);
-  const showContentMenus = routes => {
-    var result = null;
-    if (routes.length > 0) {
-      result = routes.map((route, index) => {
-        return (
-          <Route
-            key={index}
-            path={route.path}
-            exact={route.exact}
-            component={route.main}
-          />
-        );
-      });
-    }
-    return <Switch>{result}</Switch>;
-  };
 
   return (
     <div className='wrapper'>
@@ -46,8 +39,20 @@ export default function App() {
         <Toastr />
         <Menu />
         <main className='main-page'>
-          {/* <Sidebar/> */}
-          {showContentMenus(routes)}
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route exact path='/cam-nang-du-lich' component={NewsList} />
+            <Route exact path='/cam-nang-du-lich/:id' component={PostDetail} />
+            <Route exact path='/dang-nhap' component={Login} />
+            <Route exact path='/dang-ky' component={Register} />
+            <PrivateRoute exact path='/tai-khoan' component={MyAccount} />
+            <PrivateRoute exact path='/lich-trinh' component={MyTrip} />
+            <PrivateRoute
+              exact
+              path={['/chinh-sua-bai-viet/:id', '/viet-bai']}
+              component={PostAction}
+            />
+          </Switch>
         </main>
         <Footer />
       </Router>

@@ -1,7 +1,10 @@
-import { SET_AUTH_USER } from './user.constant';
+import { SET_AUTH_USER, LOGOUT } from './user.constant';
+
+const token = localStorage.getItem('token');
 
 const initState = {
   authUser: {},
+  authenticated: !!token,
 };
 
 const userReducer = (state = initState, action) => {
@@ -10,6 +13,11 @@ const userReducer = (state = initState, action) => {
       return {
         ...state,
         authUser: action.payload.user,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        authenticated: false,
       };
     default:
       return state;

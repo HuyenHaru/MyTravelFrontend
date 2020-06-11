@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { defaultImage } from '../../../config/config';
+import { defaultImage } from '../../../app/utils/config';
 
 const BannerPost = ({ post }) => (
   <Row>

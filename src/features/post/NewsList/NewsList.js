@@ -5,7 +5,7 @@ import { Container, Row } from 'reactstrap';
 import { fetchPosts } from '../post.actions';
 import ItemPost from '../ItemPost/ItemPost';
 import BannerPost from '../ItemPost/BannerPost';
-import { actionTypes } from '../../../config/config';
+import { actionTypes } from '../../../app/utils/config';
 
 const NewsList = props => {
   const dispatch = useDispatch();
