@@ -1,12 +1,12 @@
 import React from 'react';
-import Home from './pages/Home/Home';
-import NewsList from './pages/NewsList/NewsList';
-import PostDetail from './pages/PostDetail/PostDetail';
-import Login from './pages/Login/Login';
-import Register from './pages/Register/Register';
-import MyAccount from './pages/MyAccount/MyAccount';
-import MyTrip from './pages/MyTrip/MyTrip';
-import PostAction from './pages/PostAction/PostAction';
+import Home from './features/home/Home';
+import NewsList from './features/post/NewsList/NewsList';
+import PostDetail from './features/post/PostDetailed/PostDetail';
+import Login from './features/user/Login/Login';
+import Register from './features/user/Register/Register';
+import MyAccount from './features/user/MyAccount/MyAccount';
+import MyTrip from './features/user/MyTrip/MyTrip';
+import PostAction from './features/post/PostAction/PostAction';
 const routes = [
   {
     path: '/',
