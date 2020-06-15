@@ -1,16 +1,17 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchPost, fetchPosts } from '../post.actions';
-import { Container } from 'reactstrap';
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
-import ItemSlide from '../ItemPost/ItemSlide';
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPost, fetchPosts } from "../post.actions";
+import { Container } from "reactstrap";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import ItemSlide from "../ItemPost/ItemSlide";
 
 const PostDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { currentPost, posts } = useSelector(state => state.post);
+  const { currentPost, posts } = useSelector((state) => state.post);
 
   useEffect(() => {
     if (id) {
@@ -44,38 +45,51 @@ const PostDetail = () => {
     },
   };
 
-  const { mainPhoto = '', title = '', content = '' } = currentPost
-    ? currentPost
-    : {};
+  const {
+    mainPhoto = "",
+    title = "",
+    content = "",
+    date = "",
+    userAvatar = "",
+    userName = "",
+  } = currentPost ? currentPost : {};
 
   return (
-    <div className='detail-post'>
+    <div className="detail-post">
       {/*Module Banner*/}
-      <div className='module-banner'>
-        <img className='img-respon img-banner' src={mainPhoto} alt='' />
+      <div className="module-banner">
+        <img className="img-respon img-banner" src={mainPhoto} alt="" />
 
-        <div className='title-bn'>
+        <div className="title-bn">
           <h2>{title}</h2>
           <div>
-            Trang chủ &nbsp;<i className='fas fa-angle-double-right'></i>&nbsp;
-            Cẩm nang du lịch &nbsp;<i className='fas fa-angle-double-right'></i>
+            Trang chủ &nbsp;<i className="fas fa-angle-double-right"></i>&nbsp;
+            Cẩm nang du lịch &nbsp;<i className="fas fa-angle-double-right"></i>
             &nbsp; {title}
+          </div>
+          <div className="info-auth">
+            <span>
+              <img className="img-respon" src={userAvatar} />
+            </span>
+            <span>
+              {userName}, {moment(date).format("DD/MM/YYYY")}
+            </span>
           </div>
         </div>
       </div>
       <Container>
-        <div className='divContent'>
+        <div className="divContent">
           <div dangerouslySetInnerHTML={{ __html: content }}></div>
         </div>
-        <div className='post-lq'>
-          <h2 className='title-profile'>Bài viết liên quan</h2>
+        <div className="post-lq">
+          <h2 className="title-profile">Bài viết liên quan</h2>
           <Carousel
             ssr
             partialVisbile
-            itemClass='image-item'
+            itemClass="image-item"
             responsive={responsive}
           >
-            {posts.slice(0, 5).map(post => {
+            {posts.slice(0, 5).map((post) => {
               return <ItemSlide post={post} key={post._id} />;
             })}
           </Carousel>

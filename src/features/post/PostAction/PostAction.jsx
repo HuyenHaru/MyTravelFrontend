@@ -1,23 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { Form, Input, Upload, Button, Spin } from 'antd';
-import ReactQuill from 'react-quill';
-import { UploadOutlined } from '@ant-design/icons';
+import React, { useState, useEffect, useRef } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Form, Input, Upload, Button, Spin, Select } from "antd";
+import ReactQuill from "react-quill";
+import { UploadOutlined } from "@ant-design/icons";
 
-import { textEditorConfig } from '../../../app/utils/config';
-import { createPost, fetchPost, clearPost, updatePost } from '../post.actions';
-import { actionTypes } from '../../../app/utils/config';
-import { Container } from 'react-bootstrap';
+import { textEditorConfig } from "../../../app/utils/config";
+import { createPost, fetchPost, clearPost, updatePost } from "../post.actions";
+import { actionTypes } from "../../../app/utils/config";
+import { Container } from "react-bootstrap";
 
-const PostAction = props => {
+const PostAction = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { id } = useParams();
   const [form] = Form.useForm();
-  const post = useSelector(state => state.post.currentPost);
-  const { loading, actionType } = useSelector(state => state.async);
-  const [content, setContent] = useState('');
+  const post = useSelector((state) => state.post.currentPost);
+  const { loading, actionType } = useSelector((state) => state.async);
+  const [content, setContent] = useState("");
   const [fileList, setFileList] = useState([]);
 
   const quillRef = useRef(null);
@@ -43,8 +43,8 @@ const PostAction = props => {
       setFileList([
         ...fileList,
         {
-          uid: '1',
-          status: 'done',
+          uid: "1",
+          status: "done",
           url: post.mainPhoto,
         },
       ]);
@@ -55,8 +55,8 @@ const PostAction = props => {
     // eslint-disable-next-line
   }, [post]);
 
-  const handleChangeImage = e => {
-    e.file.status = 'done';
+  const handleChangeImage = (e) => {
+    e.file.status = "done";
     form.setFieldsValue({ image: e.file });
     setFileList([...e.fileList]);
   };
@@ -67,7 +67,7 @@ const PostAction = props => {
 
   const imageValidator = (rule, value) => {
     if (!value) {
-      return Promise.reject('Vui lòng chọn ảnh cho bài viết');
+      return Promise.reject("Vui lòng chọn ảnh cho bài viết");
     }
 
     return Promise.resolve();
@@ -76,10 +76,10 @@ const PostAction = props => {
   const clearForm = () => {
     setFileList([]);
     form.resetFields();
-    quillRef.current.setEditorContents(quillRef.current.editor, '');
+    quillRef.current.setEditorContents(quillRef.current.editor, "");
   };
 
-  const handleSubmit = values => {
+  const handleSubmit = (values) => {
     const post = {
       image: values.image,
       title: values.title,
@@ -91,6 +91,8 @@ const PostAction = props => {
     } else {
       dispatch(createPost(post, history));
     }
+
+    // console.log(values);
   };
 
   const fetchPostLoading = actionTypes.post.FETCH_POST ? loading : false;
@@ -103,29 +105,48 @@ const PostAction = props => {
 
   return (
     <Spin spinning={fetchPostLoading}>
-      <div className='create-post'>
+      <div className="create-post">
         <Container>
-          <div className='title-post'>
+          <div className="title-post">
             Hãy cùng chúng tôi lan tỏa đam mê khám phá thế giới <br />
             Bạn đã sẵn sàng chia sẽ nhưng kinh nghiệm du lịch hữu ích của bản
             thân cùng hội mê xê dịch rồi chứ? Let's go!
           </div>
-          <Form form={form} size='large' onFinish={handleSubmit}>
+          <Form form={form} size="large" onFinish={handleSubmit}>
             <Form.Item
-              name='title'
+              name="title"
               rules={[
                 {
                   required: true,
-                  message: 'Vui lòng điền tiêu đề cho bài viết',
+                  message: "Vui lòng điền tiêu đề cho bài viết",
                 },
               ]}
             >
-              <Input placeholder='Tựa đề hay gây ấn tượng cho người đọc' />
+              <Input placeholder="Tựa đề hay gây ấn tượng cho người đọc" />
             </Form.Item>
-            <Form.Item name='image' rules={[{ validator: imageValidator }]}>
+            <Form.Item
+              name="typePost"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng điền tiêu đề cho bài viết",
+                },
+              ]}
+            >
+              <Select placeholder="Chọn loại bài viết">
+                <Select.Option value="foodPost">Bí kíp ăn uống</Select.Option>
+                <Select.Option value="experiencePost">
+                  Kinh nghiệm du lịch
+                </Select.Option>
+                <Select.Option value="placePost">
+                  Địa điểm vui chơi
+                </Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item name="image" rules={[{ validator: imageValidator }]}>
               <Upload
                 customRequest={() => {}}
-                listType='picture-card'
+                listType="picture-card"
                 multiple={false}
                 onChange={handleChangeImage}
                 defaultFileList={fileList}
@@ -136,18 +157,18 @@ const PostAction = props => {
             </Form.Item>
             <Form.Item>
               <ReactQuill
-                theme='snow'
+                theme="snow"
                 onChange={handleEditorChange}
                 modules={textEditorConfig.modules}
                 formats={textEditorConfig.formats}
                 value={content}
-                bounds={'.app'}
-                placeholder='Write something...'
+                bounds={".app"}
+                placeholder="Write something..."
                 ref={quillRef}
               />
             </Form.Item>
             <Form.Item>
-              <Button htmlType='submit' type='primary' loading={submitLoading}>
+              <Button htmlType="submit" type="primary" loading={submitLoading}>
                 Hoàn thành
               </Button>
             </Form.Item>
