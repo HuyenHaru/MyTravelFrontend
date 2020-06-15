@@ -67,13 +67,15 @@ export const fetchPostProfile = () => dispatch => {
     });
 };
 
-export const createPost = (post, history) => dispatch => {
+export const createPost = (newPost, history) => dispatch => {
   const formData = new FormData();
 
-  formData.append('title', post.title);
-  formData.append('content', post.content);
-  if (post.image.file) {
-    formData.append('image', post.image.file.originFileObj);
+  formData.append('title', newPost.title);
+  formData.append('content', newPost.content);
+  formData.append('type', newPost.type);
+
+  if (newPost.image.file) {
+    formData.append('image', newPost.image.file.originFileObj);
   }
 
   const config = {
@@ -95,18 +97,21 @@ export const createPost = (post, history) => dispatch => {
       history.push('/cam-nang-du-lich');
     })
     .catch(err => {
+      console.log(err);
       toastr.error('Oops', 'Some thing when wrong, please try again');
       dispatch(asyncActionError());
     });
 };
 
-export const updatePost = (id, post, history) => dispatch => {
+export const updatePost = (updatedPost, history) => dispatch => {
   const formData = new FormData();
 
-  formData.append('title', post.title);
-  formData.append('content', post.content);
-  if (post.image.file) {
-    formData.append('image', post.image.file.originFileObj);
+  if (updatedPost.title) formData.append('title', updatedPost.title);
+  if (updatedPost.content) formData.append('content', updatedPost.content);
+  if (updatedPost.type) formData.append('type', updatedPost.type);
+
+  if (updatedPost.image.file) {
+    formData.append('image', updatedPost.image.file.originFileObj);
   }
 
   const config = {
@@ -118,7 +123,7 @@ export const updatePost = (id, post, history) => dispatch => {
   dispatch(asyncActionStart(actionTypes.post.UPDATE_POST));
 
   axios
-    .post(`http://localhost:5001/api/post/${id}`, formData, config)
+    .post(`http://localhost:5001/api/post/${updatedPost._id}`, formData, config)
     .then(res => {
       const post = res.data;
 
@@ -128,6 +133,7 @@ export const updatePost = (id, post, history) => dispatch => {
       history.push('/cam-nang-du-lich');
     })
     .catch(err => {
+      console.log(err);
       toastr.error('Oops', 'Some thing when wrong, please try again');
       dispatch(asyncActionError());
     });

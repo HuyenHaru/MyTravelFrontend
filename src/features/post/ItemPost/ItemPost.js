@@ -3,7 +3,7 @@ import { Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { defaultImage } from '../../../app/utils/config';
 
-const ItemPost = ({ post, authenticated }) => (
+const ItemPost = ({ post, authenticated, authUser }) => (
   <Col xs='12' sm='6' md='4' lg='4'>
     <Link to={`/cam-nang-du-lich/${post._id}`} className='img-news'>
       <img
@@ -20,7 +20,7 @@ const ItemPost = ({ post, authenticated }) => (
     <Link to={`/cam-nang-du-lich/${post._id}`} className='view-detail'>
       View detail [+]
     </Link>
-    {authenticated && (
+    {authenticated && authUser._id === post.user && (
       <Link to={`/chinh-sua-bai-viet/${post._id}`} className='btn btn-danger'>
         Edit
       </Link>

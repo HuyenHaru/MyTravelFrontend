@@ -65,6 +65,7 @@ const NewsList = props => {
                     post={post}
                     key={post._id}
                     authenticated={authenticated}
+                    authUser={authUser}
                   />
                 ))}
             </Row>
