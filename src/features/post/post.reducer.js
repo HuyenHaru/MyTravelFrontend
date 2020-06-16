@@ -7,7 +7,17 @@ import {
 } from './post.constant';
 
 const initState = {
-  posts: [],
+  posts: {
+    docs: [],
+    totalDocs: 0,
+    limit: 10,
+    totalPages: 0,
+    page: 0,
+    hasPrevPage: false,
+    hasNextPage: false,
+    prevPage: null,
+    nextPage: null,
+  },
   currentPost: null,
 };
 
@@ -16,7 +26,10 @@ const postReducer = (state = initState, { type, payload }) => {
     case GET_POSTS:
       return {
         ...state,
-        posts: payload.posts,
+        posts: {
+          ...state.posts,
+          ...payload,
+        },
       };
     case GET_POST:
       return {
@@ -27,15 +40,12 @@ const postReducer = (state = initState, { type, payload }) => {
     case ADD_POST:
       return {
         ...state,
-        posts: [...state.posts, payload.post],
         currentPost: payload.post,
       };
     case UPDATE_POST:
       return {
         ...state,
-        posts: state.posts.map(post =>
-          post._id === payload.post._id ? payload.post : post
-        ),
+        currentPost: payload.post,
       };
     case CLEAR_POST:
       return {

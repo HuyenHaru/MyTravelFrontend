@@ -20,7 +20,7 @@ const ItemPost = ({ post, authenticated, authUser }) => (
     <Link to={`/cam-nang-du-lich/${post._id}`} className='view-detail'>
       View detail [+]
     </Link>
-    {authenticated && authUser._id === post.user && (
+    {authenticated && authUser._id === post.user._id && (
       <Link to={`/chinh-sua-bai-viet/${post._id}`} className='btn btn-danger'>
         Edit
       </Link>

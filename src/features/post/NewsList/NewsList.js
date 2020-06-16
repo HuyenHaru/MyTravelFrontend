@@ -10,7 +10,7 @@ import { actionTypes } from '../../../app/utils/config';
 const NewsList = props => {
   const dispatch = useDispatch();
   const { loading, actionType } = useSelector(state => state.async);
-  const { posts } = useSelector(state => state.post);
+  const { docs: posts } = useSelector(state => state.post.posts);
   const { authUser } = useSelector(state => state.user);
 
   const [postsCarousel, setPostsCarousel] = useState([]);

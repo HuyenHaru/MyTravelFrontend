@@ -20,15 +20,15 @@ export const fetchPosts = () => dispatch => {
   axios
     .get('http://localhost:5001/api/post')
     .then(res => {
-      const { docs, total, limit, page, pages } = res.data;
+      // const { docs, total, limit, page, pages } = res.data;
       dispatch({
         type: GET_POSTS,
-        payload: { posts: docs, total, limit, page, pages },
+        payload: res.data,
       });
       dispatch(asyncActionFinish());
     })
     .catch(err => {
-      console.log(err.response.data);
+      console.log(err);
       dispatch(asyncActionError());
     });
 };
@@ -38,7 +38,7 @@ export const fetchPost = id => dispatch => {
   axios
     .get(`http://localhost:5001/api/post/${id}`)
     .then(res => {
-      const post = res.data;
+      const { post } = res.data;
       dispatch({ type: GET_POST, payload: { post } });
       dispatch(asyncActionFinish());
     })
@@ -94,7 +94,7 @@ export const createPost = (newPost, history) => dispatch => {
       dispatch({ type: ADD_POST, payload: { post } });
       dispatch(asyncActionFinish());
       toastr.success('Success', 'Your post has been created');
-      history.push('/cam-nang-du-lich');
+      history.push(`/cam-nang-du-lich/${post._id}`);
     })
     .catch(err => {
       console.log(err);
@@ -125,12 +125,12 @@ export const updatePost = (updatedPost, history) => dispatch => {
   axios
     .post(`http://localhost:5001/api/post/${updatedPost._id}`, formData, config)
     .then(res => {
-      const post = res.data;
+      const { post } = res.data;
 
       dispatch({ type: UPDATE_POST, payload: { post } });
       dispatch(asyncActionFinish());
       toastr.success('Success', 'Your post has been updated');
-      history.push('/cam-nang-du-lich');
+      history.push(`/cam-nang-du-lich/${post._id}`);
     })
     .catch(err => {
       console.log(err);
