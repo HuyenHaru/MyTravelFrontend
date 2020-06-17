@@ -1,12 +1,20 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, Fragment, useState} from 'react';
 import { useParams } from 'react-router-dom';
-import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPost, fetchPosts } from '../post.actions';
+import {commentOnPost, deletePostComment, fetchPost, fetchPosts, likePost, unlikePost} from '../post.actions';
 import { Container } from 'reactstrap';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import ItemSlide from '../ItemPost/ItemSlide';
+import Comments from './Comments';
+import CommentEditor from './CommentEditor';
+import {Avatar, Button, Comment, Divider, Space} from "antd";
+import {actionTypes} from "../../../app/utils/config";
+import {CalendarOutlined, DislikeFilled, EyeOutlined, LikeFilled, UserOutlined} from "@ant-design/icons";
+import IconText from "../../../app/Layout/common/IconText";
+import {formatDate} from "../../../app/utils/helper";
+
+const postAction = actionTypes.post;
 
 const PostDetail = () => {
   const { id } = useParams();
@@ -15,6 +23,9 @@ const PostDetail = () => {
     currentPost,
     posts: { docs: posts },
   } = useSelector(state => state.post);
+  const { loading, actionType, elmId } = useSelector(state => state.async);
+  const { authUser, authenticated } = useSelector(state => state.user);
+  const [comment, setComment] = useState('');
 
   useEffect(() => {
     if (id) {
@@ -29,6 +40,17 @@ const PostDetail = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleDeleteComment = commentId => dispatch(deletePostComment(id, commentId));
+  const handleChangeComment = e => setComment(e.target.value);
+  const handleComment = e => {
+    e.preventDefault();
+    setComment('');
+    dispatch(commentOnPost(id, { text: comment }));
+  };
+
+  const handleLikePost = () => dispatch(likePost(id));
+  const handleUnlikePost = () => dispatch(unlikePost(id));
 
   const responsive = {
     desktop: {
@@ -49,12 +71,19 @@ const PostDetail = () => {
   };
 
   const {
+    comments = [],
     mainPhoto = '',
     title = '',
     content = '',
     date = '',
     user = {},
+    likes = [],
+    views = 0
   } = currentPost ? currentPost : {};
+
+  const commentLoading = actionType === postAction.CREATE_POST ? loading : false;
+  const likeLoading = actionType === postAction.LIKE_POST ? loading : false;
+  const unlikeLoading = actionType === postAction.UNLIKE_POST ? loading : false;
 
   return (
     <div className='detail-post'>
@@ -65,8 +94,8 @@ const PostDetail = () => {
         <div className='title-bn'>
           <h2>{title}</h2>
           <div>
-            Trang chủ &nbsp;<i className='fas fa-angle-double-right'></i>&nbsp;
-            Cẩm nang du lịch &nbsp;<i className='fas fa-angle-double-right'></i>
+            Trang chủ &nbsp;<i className='fas fa-angle-double-right' />&nbsp;
+            Cẩm nang du lịch &nbsp;<i className='fas fa-angle-double-right' />
             &nbsp; {title}
           </div>
           <div className='info-auth'>
@@ -74,15 +103,78 @@ const PostDetail = () => {
               <img className='img-respon' src={user.avatar} alt='user' />
             </span>
             <span>
-              {user.name}, {moment(date).format('DD/MM/YYYY')}
+              {user.name}, {formatDate(date)}
             </span>
           </div>
         </div>
       </div>
       <Container>
         <div className='divContent'>
-          <div dangerouslySetInnerHTML={{ __html: content }}></div>
+          <div dangerouslySetInnerHTML={{ __html: content }} />
         </div>
+        <Divider />
+        <Space>
+          <IconText icon={UserOutlined} text={user.name} />|
+          <IconText icon={CalendarOutlined} text={formatDate(date)} />|
+          <IconText icon={EyeOutlined} text={views} />
+        </Space>
+        <Divider />
+        {
+          authenticated && (
+              <Fragment>
+                <div style={{ textAlign: 'center' }}>
+                  <Space align='center'>
+                    <Button
+                      type='primary'
+                      icon={<LikeFilled />}
+                      loading={likeLoading}
+                      onClick={handleLikePost}
+                    >
+                      Like this Post ({ likes.length } likes)
+                    </Button>
+                    <Button
+                      type='primary'
+                      icon={<DislikeFilled />}
+                      danger={true}
+                      loading={unlikeLoading}
+                      onClick={handleUnlikePost}
+                    >
+                      UnLike this Post ({ likes.length } likes)
+                    </Button>
+                  </Space>
+                </div>
+                <Divider />
+              </Fragment>
+          )
+        }
+        <Comments
+          comments={comments}
+          authUserId={authUser._id}
+          loading={loading}
+          loadingType={actionType}
+          elmId={elmId}
+          deleteComment={handleDeleteComment}
+        />
+
+        {
+          authenticated && (
+              <Fragment>
+                <Comment
+                  avatar={<Avatar src={authUser.avatar} alt={authUser.name} />}
+                  content={
+                    <CommentEditor
+                      onChange={handleChangeComment}
+                      onSubmit={handleComment}
+                      submitting={commentLoading}
+                      value={comment}
+                    />
+                  }
+                />
+
+              </Fragment>
+          )
+        }
+        <Divider />
         <div className='post-lq'>
           <h2 className='title-profile'>Bài viết liên quan</h2>
           <Carousel

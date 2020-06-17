@@ -2,6 +2,8 @@ import React from 'react';
 import { Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { defaultImage } from '../../../app/utils/config';
+import {Button} from "antd";
+import {EditOutlined} from "@ant-design/icons";
 
 const ItemPost = ({ post, authenticated, authUser }) => (
   <Col xs='12' sm='6' md='4' lg='4'>
@@ -17,14 +19,16 @@ const ItemPost = ({ post, authenticated, authUser }) => (
       {post.userName} - {post.date}
     </div>
     <div className='item-content'>{post.shortDescription}</div>
-    <Link to={`/cam-nang-du-lich/${post._id}`} className='view-detail'>
-      View detail [+]
-    </Link>
-    {authenticated && authUser._id === post.user._id && (
-      <Link to={`/chinh-sua-bai-viet/${post._id}`} className='btn btn-danger'>
-        Edit
-      </Link>
-    )}
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+        <Link to={`/cam-nang-du-lich/${post._id}`} className='view-detail'>
+            View detail [+]
+        </Link>
+        {authenticated && authUser._id === post.user._id && (
+            <Link to={`/chinh-sua-bai-viet/${post._id}`}>
+                <Button type='link' icon={<EditOutlined />} />
+            </Link>
+        )}
+    </div>
   </Col>
 );
 

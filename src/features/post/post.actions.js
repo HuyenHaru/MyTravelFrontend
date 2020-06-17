@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { toastr } from 'react-redux-toastr';
 import {
-  GET_POSTS,
-  GET_POST,
-  ADD_POST,
-  CLEAR_POST,
-  UPDATE_POST,
+    GET_POSTS,
+    GET_POST,
+    ADD_POST,
+    CLEAR_POST,
+    UPDATE_POST, COMMENT_ON_POST, DELETE_POST_COMMENT, LIKE_POST, UNLIKE_POST,
 } from './post.constant';
 import {
   asyncActionStart,
@@ -18,7 +18,7 @@ export const fetchPosts = () => dispatch => {
   dispatch(asyncActionStart(actionTypes.post.FETCH_POSTS));
 
   axios
-    .get('http://localhost:5001/api/post')
+    .get('/api/post')
     .then(res => {
       // const { docs, total, limit, page, pages } = res.data;
       dispatch({
@@ -36,14 +36,14 @@ export const fetchPosts = () => dispatch => {
 export const fetchPost = id => dispatch => {
   dispatch(asyncActionStart(actionTypes.post.FETCH_POST));
   axios
-    .get(`http://localhost:5001/api/post/${id}`)
+    .get(`/api/post/${id}`)
     .then(res => {
       const { post } = res.data;
       dispatch({ type: GET_POST, payload: { post } });
       dispatch(asyncActionFinish());
     })
     .catch(err => {
-      // console.log(err.response.data);
+      console.log(err);
       dispatch(asyncActionError());
     });
 };
@@ -52,7 +52,7 @@ export const fetchPostProfile = () => dispatch => {
   dispatch(asyncActionStart(actionTypes.post.FETCH_POSTS));
 
   axios
-    .get(`http://localhost:5001/api/post/profile/`)
+    .get(`/api/post/profile/`)
     .then(res => {
       const { docs, total, limit, page, pages } = res.data;
       dispatch({
@@ -87,9 +87,9 @@ export const createPost = (newPost, history) => dispatch => {
   dispatch(asyncActionStart(actionTypes.post.CREATE_POST));
 
   axios
-    .post(`http://localhost:5001/api/post/`, formData, config)
+    .post(`/api/post/`, formData, config)
     .then(res => {
-      const post = res.data;
+      const { post } = res.data;
 
       dispatch({ type: ADD_POST, payload: { post } });
       dispatch(asyncActionFinish());
@@ -123,7 +123,7 @@ export const updatePost = (updatedPost, history) => dispatch => {
   dispatch(asyncActionStart(actionTypes.post.UPDATE_POST));
 
   axios
-    .post(`http://localhost:5001/api/post/${updatedPost._id}`, formData, config)
+    .post(`/api/post/${updatedPost._id}`, formData, config)
     .then(res => {
       const { post } = res.data;
 
@@ -137,6 +137,71 @@ export const updatePost = (updatedPost, history) => dispatch => {
       toastr.error('Oops', 'Some thing when wrong, please try again');
       dispatch(asyncActionError());
     });
+};
+
+export const commentOnPost = (postId, comment) => async dispatch => {
+    dispatch(asyncActionStart(actionTypes.post.CREATE_POST));
+
+  try {
+
+      const response = await axios.post(`/api/post/comment/${postId}`, comment);
+      const { post } = response.data;
+
+      dispatch({ type: COMMENT_ON_POST, payload: { post } });
+      dispatch(asyncActionFinish());
+  }  catch (err) {
+      console.log(err);
+      toastr.error('Oops', 'Some thing when wrong, please try again');
+      dispatch(asyncActionError());
+  }
+};
+
+export const deletePostComment = (postId, commentId) => async dispatch => {
+  dispatch(asyncActionStart(actionTypes.post.DELETE_POST_COMMENT, commentId));
+
+  try {
+    const response = await axios.delete(`/api/post/comment/${postId}/${commentId}`);
+    const { post } = response.data
+
+    dispatch({ type: DELETE_POST_COMMENT, payload: { post } });
+    dispatch(asyncActionFinish());
+  } catch (err) {
+    console.log(err);
+    dispatch(asyncActionError());
+    toastr.error('Oops', 'Some thing went wrong, please try again');
+  }
+};
+
+export const likePost = postId => async dispatch => {
+  dispatch(asyncActionStart(actionTypes.post.LIKE_POST));
+
+  try {
+    const response = await axios.put(`/api/post/like/${postId}`);
+    const { post } = response.data;
+
+    dispatch({ type: LIKE_POST, payload: { post } });
+    dispatch(asyncActionFinish());
+  } catch (err) {
+    console.log(err);
+    dispatch(asyncActionError());
+    toastr.error('Oops', err.response.data.general.msg);
+  }
+};
+
+export const unlikePost = postId => async dispatch => {
+  dispatch(asyncActionStart(actionTypes.post.UNLIKE_POST));
+
+  try {
+    const response = await axios.put(`/api/post/unlike/${postId}`);
+    const { post } = response.data;
+
+    dispatch({ type: UNLIKE_POST, payload: { post } });
+    dispatch(asyncActionFinish());
+  } catch (err) {
+    console.log(err.response.data);
+    dispatch(asyncActionError());
+    toastr.error('Oops', err.response.data.general.msg);
+  }
 };
 
 export const clearPost = () => ({ type: CLEAR_POST });

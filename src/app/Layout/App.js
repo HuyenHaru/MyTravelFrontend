@@ -20,6 +20,7 @@ import PrivateRoute from './common/PrivateRoute';
 import MyAccount from '../../features/user/MyAccount/MyAccount';
 import MyTrip from '../../features/user/MyTrip/MyTrip';
 import PostAction from '../../features/post/PostAction/PostAction';
+import {setDefaultAxios} from "../utils/helper";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ export default function App() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
+      setDefaultAxios();
       dispatch(getAuthUser(token));
     }
 

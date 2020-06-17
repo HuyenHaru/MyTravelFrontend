@@ -3,7 +3,7 @@ import {
   GET_POST,
   ADD_POST,
   CLEAR_POST,
-  UPDATE_POST,
+  UPDATE_POST, COMMENT_ON_POST, LIKE_POST, UNLIKE_POST, DELETE_POST_COMMENT,
 } from './post.constant';
 
 const initState = {
@@ -46,6 +46,14 @@ const postReducer = (state = initState, { type, payload }) => {
       return {
         ...state,
         currentPost: payload.post,
+      };
+    case COMMENT_ON_POST:
+    case LIKE_POST:
+    case UNLIKE_POST:
+    case DELETE_POST_COMMENT:
+      return {
+        ...state,
+        currentPost: payload.post
       };
     case CLEAR_POST:
       return {

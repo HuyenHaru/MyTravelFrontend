@@ -71,5 +71,6 @@
   },
   "devDependencies": {
     "babel-plugin-react-html-attrs": "^2.1.0"
-  }
+  },
+  "proxy": "http://localhost:5001"
 }

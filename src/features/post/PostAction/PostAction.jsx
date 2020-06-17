@@ -30,6 +30,7 @@ const PostAction = props => {
     return () => {
       form.resetFields();
       handleClearContent();
+      setFileList([]);
       dispatch(clearPost());
     };
 
