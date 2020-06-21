@@ -35,9 +35,6 @@ const ItemPost = ({ post, authenticated, authUser }) => (
             alignItems: "flex-end",
           }}
         >
-          <div to={`/cam-nang-du-lich/${post._id}`} className="view-detail">
-            View detail [+]
-          </div>
           {authenticated && authUser._id === post.user._id && (
             <Link to={`/chinh-sua-bai-viet/${post._id}`}>
               <Button type="link" icon={<EditOutlined />} />

@@ -8,27 +8,29 @@ import IconText from "../../../app/Layout/common/IconText";
 import { formatDate } from "../../../app/utils/helper";
 
 const BannerPost = ({ post }) => (
-  <Row>
-    <Col xs="12" sm="6" md="7" lg="7">
-      <Link to={`/cam-nang-du-lich/${post._id}`} className="img-news">
-        <img
-          className="img-respon"
-          src={post.mainPhoto || defaultImage.BACKGROUND}
-          alt=""
-        />
-      </Link>
-    </Col>
-    <Col xs="12" sm="6" md="5" lg="5">
-      <h2 className="link-news">{post.title}</h2>
-      <Space>
-        <IconText icon={UserOutlined} text={post.user.name} />|
-        <IconText icon={CalendarOutlined} text={formatDate(post.date)} />|
-        <IconText icon={EyeOutlined} text={post.views} />
-      </Space>
-      <div className="item-content">{post.shortDescription}</div>
-      {/* <div className="text-author">{post.user.name}</div> */}
-    </Col>
-  </Row>
+  <Link to={`/cam-nang-du-lich/${post._id}`}>
+    <Row>
+      <Col xs="12" sm="6" md="7" lg="7">
+        <div className="img-news">
+          <img
+            className="img-respon"
+            src={post.mainPhoto || defaultImage.BACKGROUND}
+            alt=""
+          />
+        </div>
+      </Col>
+      <Col xs="12" sm="6" md="5" lg="5">
+        <h2 className="link-news">{post.title}</h2>
+        <Space>
+          <IconText icon={UserOutlined} text={post.user.name} />|
+          <IconText icon={CalendarOutlined} text={formatDate(post.date)} />|
+          <IconText icon={EyeOutlined} text={post.views} />
+        </Space>
+        <div className="item-content">{post.shortDescription}</div>
+        {/* <div className="text-author">{post.user.name}</div> */}
+      </Col>
+    </Row>
+  </Link>
 );
 
 export default BannerPost;

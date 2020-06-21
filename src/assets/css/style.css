@@ -289,53 +289,17 @@ a:hover {
 /* #endregion */
 
 /* #region Tin tức home */
-.news {
-  background: url("./images/anh-lua.jpg") no-repeat;
-  padding: 30px 0;
-  opacity: 0.9;
+.border-bot {
+  border-bottom: 2px solid #209e91;
+  margin-bottom: 10px;
 }
-.news .title-news {
-  font-size: 25px;
-  font-weight: 700;
+.border-bot .tt-home {
+  padding: 0 10px;
+  background-color: #209e91;
   color: #fff;
-}
-.news-home .img-news {
-  position: relative;
-  margin-bottom: 30px;
-  overflow: hidden;
-  border-radius: 10px;
-}
-.news-home .img-news img {
-  opacity: 1;
-  width: 100%;
-  border-radius: 10px;
-  object-fit: cover;
-  transition: all 300ms ease-in 0ms;
-}
-.news-home .img-news:hover img {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
-}
-.listnews-home .img-news img {
-  opacity: 0.7;
-  height: 400px;
-}
-.news-home .img-news .link-news {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  color: #fff;
-  font-weight: 700;
-}
-.news-home .img-news .link-news:hover {
-  color: #78f1e5;
-}
-.news-home .text-small {
-  font-size: 12px;
-  color: #f1f1f1;
-}
-.news-home .btn-them {
-  text-align: center;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 /* #endregion Tin tức home */
 
@@ -472,7 +436,7 @@ a:hover {
   margin: 20px 0;
 }
 .link-news-lq {
-  font-size: 15px;
+  font-size: 17px;
   margin-left: 5px;
   font-weight: 500;
   overflow: hidden;
@@ -490,7 +454,20 @@ a:hover {
 }
 .post-lq .item-lq {
   border-bottom: 1px solid #25cdaf;
-  padding: 5px 0;
+  padding: 10px 0;
+}
+.post-lq .item-lq .cont-item {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  color: #333;
+}
+.post-lq .item-lq .cont-item h2,
+.post-lq .item-lq .cont-item strong {
+  font-weight: 400;
+  font-size: 15px;
 }
 /* #endregion Post Liên quan */
 

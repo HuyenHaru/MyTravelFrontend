@@ -9,6 +9,8 @@
 @media screen and (min-width: 992px) {
   .post-lq {
     margin-left: 15px;
+    position: sticky;
+    top: 30px;
   }
 }
 @media screen and (max-width: 992px) {

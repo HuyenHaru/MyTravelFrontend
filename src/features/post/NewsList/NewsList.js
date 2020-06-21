@@ -37,18 +37,6 @@ const NewsList = (props) => {
   return (
     <Spin spinning={fetchPostsLoading}>
       <div className="main-wrap">
-        {/*Module Banner*/}
-        {/* <div className='module-banner'>
-          <img
-            className='img-respon img-banner'
-            src='./../../assets/images/banner-post.jpg'
-            alt=''
-          />
-          <div className='title-bn'>
-            <h2>Cẩm nang du lịch</h2>
-            <div>Trang chủ &nbsp;/&nbsp; Cẩm nang du lịch</div>
-          </div>
-        </div> */}
         {/* NOI DUNG */}
         <div className="igi_module news-list">
           <Container>

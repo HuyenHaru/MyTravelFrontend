@@ -1,5 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
+import { Form, Input } from "antd";
 
 const MyTrip = () => {
   return (
@@ -21,6 +22,19 @@ const MyTrip = () => {
             Hãy tự tạo cho mình một lịch trình phù hợp với quỹ thời gian và hầu
             bao của bản thân nào!
           </h3>
+          <Form>
+            <Form.Item
+              name="title"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng nhập tên tỉnh",
+                },
+              ]}
+            >
+              <Input placeholder="Thành phố bạn muốn đến" />
+            </Form.Item>
+          </Form>
         </div>
       </Container>
     </div>

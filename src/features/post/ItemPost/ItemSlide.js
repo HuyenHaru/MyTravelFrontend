@@ -14,7 +14,15 @@ const ItemSlide = ({ post }) => (
         <Col xs={16} sm={16} md={16} lg={16} xl={16}>
           <div className="">
             <h2 className="link-news-lq">{post.title}</h2>
-            {/* {post.userName} - {post.date} */}
+            {/* <Space>
+              <IconText icon={UserOutlined} text={post.user.name} />|
+              <IconText icon={EyeOutlined} text={post.views} />
+            </Space> */}
+          </div>
+        </Col>
+        <Col xs={24} sm={24} md={24} lg={24}>
+          <div className="cont-item">
+            <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
           </div>
         </Col>
       </Row>

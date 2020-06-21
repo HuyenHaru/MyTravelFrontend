@@ -5,14 +5,12 @@ import {
   commentOnPost,
   deletePostComment,
   fetchPost,
-  fetchPosts,
   likePost,
   unlikePost,
 } from "../post.actions";
 import { Container } from "reactstrap";
 // import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import ItemSlide from "../ItemPost/ItemSlide";
 import Comments from "./Comments";
 import CommentEditor from "./CommentEditor";
 import { Avatar, Button, Comment, Divider, Space, Row, Col } from "antd";
@@ -26,16 +24,14 @@ import {
 } from "@ant-design/icons";
 import IconText from "../../../app/Layout/common/IconText";
 import { formatDate } from "../../../app/utils/helper";
+import Sidebar from "../../../pages/Components/Sidebar/Sidebar";
 
 const postAction = actionTypes.post;
 
 const PostDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const {
-    currentPost,
-    posts: { docs: posts },
-  } = useSelector((state) => state.post);
+  const { currentPost } = useSelector((state) => state.post);
   const { loading, actionType, elmId } = useSelector((state) => state.async);
   const { authUser, authenticated } = useSelector((state) => state.user);
   const [comment, setComment] = useState("");
@@ -47,12 +43,6 @@ const PostDetail = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-
-  useEffect(() => {
-    dispatch(fetchPosts());
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const handleDeleteComment = (commentId) =>
     dispatch(deletePostComment(id, commentId));
@@ -182,14 +172,7 @@ const PostDetail = () => {
             <Divider />
           </Col>
           <Col xs={24} sm={24} md={24} lg={6} xl={6}>
-            <div className="post-lq">
-              <h2 className="title-profile">Bài viết nổi bật</h2>
-              <div className="list-item-lq">
-                {posts.map((post) => {
-                  return <ItemSlide post={post} key={post._id} />;
-                })}
-              </div>
-            </div>
+            <Sidebar />
           </Col>
         </Row>
       </Container>
