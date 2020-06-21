@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import React, { useState } from "react";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
-const ModalChargePass = props => {
+const ModalChargePass = (props) => {
   const { className } = props;
 
   const [modal, setModal] = useState(false);
@@ -10,64 +10,64 @@ const ModalChargePass = props => {
 
   return (
     <span>
-      <a className='link-pass' onClick={toggle} href='#!'>
+      <a className="link-pass" onClick={toggle} href="#!">
         Đổi mật khẩu
       </a>
-      <Modal isOpen={modal} toggle={toggle} className={(className, 'modal-lg')}>
+      <Modal isOpen={modal} toggle={toggle} className={(className, "modal-lg")}>
         <ModalHeader toggle={toggle}>Đổi mật khẩu</ModalHeader>
         <ModalBody>
           <form>
-            <div className='body-form'>
-              <div className='form-group row'>
-                <label htmlFor='inputPass' className='col-sm-3 col-form-label'>
+            <div className="body-form">
+              <div className="form-group row">
+                <label htmlFor="inputPass" className="col-sm-3 col-form-label">
                   Mật khẩu cũ*
                 </label>
-                <div className='col-sm-9'>
+                <div className="col-sm-9">
                   <input
-                    type='password'
-                    className='form-control'
-                    id='inputPass'
-                    placeholder='Nhập mật khẩu cũ'
+                    type="password"
+                    className="form-control"
+                    id="inputPass"
+                    placeholder="Nhập mật khẩu cũ"
                   />
                 </div>
               </div>
-              <div className='form-group row'>
-                <label htmlFor='inputPass' className='col-sm-3 col-form-label'>
+              <div className="form-group row">
+                <label htmlFor="inputPass" className="col-sm-3 col-form-label">
                   Mật khẩu mới*
                 </label>
-                <div className='col-sm-9'>
+                <div className="col-sm-9">
                   <input
-                    type='password'
-                    className='form-control'
-                    id='inputPass'
-                    placeholder='Nhập mật khẩu mới'
+                    type="password"
+                    className="form-control"
+                    id="inputPass"
+                    placeholder="Nhập mật khẩu mới"
                   />
                 </div>
               </div>
-              <div className='form-group row'>
-                <label htmlFor='inputPass' className='col-sm-3 col-form-label'>
+              <div className="form-group row">
+                <label htmlFor="inputPass" className="col-sm-3 col-form-label">
                   Xác nhận lại
                 </label>
-                <div className='col-sm-9'>
+                <div className="col-sm-9">
                   <input
-                    type='password'
-                    className='form-control'
-                    id='inputPass'
-                    placeholder='Xác nhận lại mật khẩu'
+                    type="password"
+                    className="form-control"
+                    id="inputPass"
+                    placeholder="Xác nhận lại mật khẩu"
                   />
                 </div>
               </div>
-              <div className='ft-btn fr'>
+              <div className="ft-btn fr">
                 <button
-                  type='submit'
-                  className='btn btn-outline-success btn-add-item'
+                  type="submit"
+                  className="btn btn-outline-success btn-add-item"
                 >
                   Lưu
-                </button>{' '}
+                </button>{" "}
                 &emsp;
                 <button
-                  type='submit'
-                  className='btn btn-outline-dark'
+                  type="submit"
+                  className="btn btn-outline-dark"
                   onClick={toggle}
                 >
                   Hủy bỏ

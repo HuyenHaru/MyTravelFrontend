@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Carousel, Spin, Divider } from 'antd';
-import { Container, Row } from 'reactstrap';
-import { fetchPosts } from '../post.actions';
-import ItemPost from '../ItemPost/ItemPost';
-import BannerPost from '../ItemPost/BannerPost';
-import { actionTypes } from '../../../app/utils/config';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Carousel, Spin, Divider } from "antd";
+import { Container, Row } from "reactstrap";
+import { fetchPosts } from "../post.actions";
+import ItemPost from "../ItemPost/ItemPost";
+import BannerPost from "../ItemPost/BannerPost";
+import { actionTypes } from "../../../app/utils/config";
 
-const NewsList = props => {
+const NewsList = (props) => {
   const dispatch = useDispatch();
-  const { loading, actionType } = useSelector(state => state.async);
-  const { docs: posts } = useSelector(state => state.post.posts);
-  const { authUser } = useSelector(state => state.user);
+  const { loading, actionType } = useSelector((state) => state.async);
+  const { docs: posts } = useSelector((state) => state.post.posts);
+  const { authUser } = useSelector((state) => state.user);
 
   const [postsCarousel, setPostsCarousel] = useState([]);
 
@@ -36,9 +36,9 @@ const NewsList = props => {
 
   return (
     <Spin spinning={fetchPostsLoading}>
-      <div className='main-wrap'>
+      <div className="main-wrap">
         {/*Module Banner*/}
-        <div className='module-banner'>
+        {/* <div className='module-banner'>
           <img
             className='img-respon img-banner'
             src='./../../assets/images/banner-post.jpg'
@@ -48,19 +48,19 @@ const NewsList = props => {
             <h2>Cẩm nang du lịch</h2>
             <div>Trang chủ &nbsp;/&nbsp; Cẩm nang du lịch</div>
           </div>
-        </div>
+        </div> */}
         {/* NOI DUNG */}
-        <div className='igi_module news-list'>
+        <div className="igi_module news-list">
           <Container>
             <Carousel autoplay>
-              {postsCarousel.map(post => (
+              {postsCarousel.map((post) => (
                 <BannerPost post={post} key={post._id} />
               ))}
             </Carousel>
             <Divider />
             <Row>
               {posts &&
-                posts.map(post => (
+                posts.map((post) => (
                   <ItemPost
                     post={post}
                     key={post._id}

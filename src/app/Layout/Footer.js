@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { Container, Col, Row } from 'react-bootstrap';
+import React, { Component } from "react";
+// import { Container, Col, Row } from "react-bootstrap";
 
 class Footer extends Component {
   render() {
     return (
       <footer>
-        <div className='clear'></div>
-        <div className='content-footer'>
+        <div className="clear"></div>
+        {/* <div className='content-footer'>
           <div className='footer-top'>
             <Container>
               <Row>
@@ -86,12 +86,14 @@ class Footer extends Component {
               </Row>
             </Container>
           </div>
-        </div>
-        <section className='bottom-footer'>
-          <div className='container'>
-            <div className='row'>
-              <div className='content-footert'>
-                <div className='copyright'>Copyright © 2019 Anlogde Ltd.</div>
+        </div> */}
+        <section className="bottom-footer">
+          <div className="container">
+            <div className="row">
+              <div className="content-footer">
+                <div className="copyright">
+                  Copyright © DuLichVietNam: Chia sẻ kinh nghiệm từ A - Z
+                </div>
               </div>
             </div>
           </div>
