@@ -9,6 +9,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     dispatch(fetchPosts());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className="post-lq">

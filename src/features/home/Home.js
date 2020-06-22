@@ -13,12 +13,15 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(fetchPosts());
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (posts && posts.length && postsCarousel.length === 0) {
       setPostsCarousel(posts);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [posts]);
 
   return (

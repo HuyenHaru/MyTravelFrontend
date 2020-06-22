@@ -8,7 +8,7 @@ import { fetchPostProfile } from "../../post/post.actions";
 import ItemPost from "../../post/ItemPost/ItemPost";
 const MyAccount = (props) => {
   const dispatch = useDispatch();
-  const { posts } = useSelector((state) => state.post);
+  const { docs: posts } = useSelector((state) => state.post.posts);
 
   useEffect(() => {
     dispatch(fetchPostProfile());

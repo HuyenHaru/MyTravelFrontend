@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import { Form, Input } from "antd";
+import { Form, Input, InputNumber } from "antd";
 
 const MyTrip = () => {
   return (
@@ -24,7 +24,7 @@ const MyTrip = () => {
           </h3>
           <Form>
             <Form.Item
-              name="title"
+              name="city"
               rules={[
                 {
                   required: true,
@@ -33,6 +33,22 @@ const MyTrip = () => {
               ]}
             >
               <Input placeholder="Thành phố bạn muốn đến" />
+            </Form.Item>
+            <Form.Item
+              name="time"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng nhập số ngày du lịch",
+                },
+              ]}
+              style={{ width: "100%" }}
+            >
+              <InputNumber
+                placeholder="Nhập số ngày du lịch"
+                min={1}
+                style={{ width: "100%" }}
+              />
             </Form.Item>
           </Form>
         </div>
