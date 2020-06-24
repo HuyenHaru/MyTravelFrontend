@@ -45,10 +45,79 @@ export const actionTypes = {
     COMMENT_ON_POST: 'COMMENT_ON_POST',
     DELETE_POST_COMMENT: 'DELETE_POST_COMMENT',
     LIKE_POST: 'LIKE_POST',
-    UNLIKE_POST: 'UNLIKE_POST'
+    UNLIKE_POST: 'UNLIKE_POST',
   },
 };
 
 export const defaultImage = {
   BACKGROUND: 'assets/images/default.jpg',
+};
+
+export const columnsTable = {
+  columnsPlace: [
+    {
+      title: 'Tên địa điểm',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Giá',
+      dataIndex: 'price',
+      key: 'price',
+    },
+    {
+      title: 'Địa chỉ',
+      dataIndex: 'address',
+      key: 'address',
+    },
+    {
+      title: 'Thời gian tham quan',
+      dataIndex: 'time',
+      key: 'time',
+    },
+  ],
+  columnsHotel: [
+    {
+      title: 'Tên khách sạn',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Giá',
+      dataIndex: 'price',
+      key: 'price',
+    },
+    {
+      title: 'Địa chỉ',
+      dataIndex: 'address',
+      key: 'address',
+    },
+    {
+      title: 'Ảnh',
+      dataIndex: 'image',
+      key: 'image',
+    },
+  ],
+  columnsFood: [
+    {
+      title: 'Tên món ăn',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Giá',
+      dataIndex: 'price',
+      key: 'price',
+    },
+    {
+      title: 'Địa chỉ',
+      dataIndex: 'address',
+      key: 'address',
+    },
+    {
+      title: 'Ảnh',
+      dataIndex: 'image',
+      key: 'image',
+    },
+  ],
 };
