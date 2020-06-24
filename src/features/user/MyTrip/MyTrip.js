@@ -1,8 +1,9 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import { Form, Input, InputNumber } from "antd";
+import { Form, Input, InputNumber, Select } from "antd";
 
 const MyTrip = () => {
+  const [state, setState] = useState;
   return (
     <div className="my-trip">
       <div className="module-banner">
@@ -32,7 +33,20 @@ const MyTrip = () => {
                 },
               ]}
             >
-              <Input placeholder="Thành phố bạn muốn đến" />
+              <Select
+                showSearch
+                value={this.state.value}
+                placeholder={this.props.placeholder}
+                style={this.props.style}
+                defaultActiveFirstOption={false}
+                showArrow={false}
+                filterOption={false}
+                onSearch={this.handleSearch}
+                onChange={this.handleChange}
+                notFoundContent={null}
+              >
+                {options}
+              </Select>
             </Form.Item>
             <Form.Item
               name="time"
@@ -51,6 +65,48 @@ const MyTrip = () => {
               />
             </Form.Item>
           </Form>
+
+          <div className="food">
+            <div className="table-responsive">
+              <table className="table table-bordered">
+                <thead>
+                  <tr>
+                    <th colSpan="6">
+                      Hãy chọn cho mình những món đặc sản không nên bỏ lỡ
+                    </th>
+                  </tr>
+                  <tr>
+                    <th>Tên món</th>
+                    <th>Ảnh</th>
+                    <th>Giá</th>
+                    <th>Địa chỉ</th>
+                    <th>Mô tả</th>
+                    <th>Chọn</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Món 1</td>
+                    <td width="20%">
+                      <img
+                        className="img-respon"
+                        src="./../assets/images/lq1.png"
+                      />
+                    </td>
+                    <td>30.000 đ</td>
+                    <td>Đường hùng vương, thành phố Đã Nẵng</td>
+                    <td>
+                      Món này
+                      aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                    </td>
+                    <td>
+                      <input type="checkbox" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </Container>
     </div>

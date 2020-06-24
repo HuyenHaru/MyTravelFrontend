@@ -12,13 +12,13 @@ export const login = (userCredentials, history) => (dispatch) => {
   dispatch(asyncActionStart("login"));
 
   axios
-    .post("http://localhost:5001/api/auth/login", { email, password })
+    .post("/api/auth/login", { email, password })
     .then((res) => {
       const token = res.data.token;
       localStorage.setItem("token", token);
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      return axios.get("http://localhost:5001/api/auth/");
+      return axios.get("/api/auth/");
     })
     .then((res) => {
       const user = res.data;
@@ -36,7 +36,7 @@ export const login = (userCredentials, history) => (dispatch) => {
 export const register = (userCredentials, history) => (dispatch) => {
   const { username, email, password, confirmPassword } = userCredentials;
   axios
-    .post("http://localhost:5001/api/auth/register", {
+    .post("/api/auth/register", {
       username,
       email,
       password,
@@ -47,7 +47,7 @@ export const register = (userCredentials, history) => (dispatch) => {
       localStorage.setItem("token", token);
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      return axios.get("http://localhost:5001/api/auth/");
+      return axios.get("/api/auth/");
     })
     .then((res) => {
       const user = res.data;
@@ -64,7 +64,7 @@ export const getAuthUser = (token) => (dispatch) => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
   axios
-    .get("http://localhost:5001/api/auth/")
+    .get("/api/auth/")
     .then((res) => {
       const user = res.data;
 
