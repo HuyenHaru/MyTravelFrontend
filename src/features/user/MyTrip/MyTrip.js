@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Container } from 'react-bootstrap';
 import {
@@ -8,11 +8,12 @@ import {
   Spin,
   Button,
   Table,
-  Typography, Divider,
+  Typography,
+  Divider,
 } from 'antd';
 import { columnsTable } from '../../../app/utils/config';
-import { useDebounce } from "../../../app/Layout/common/CustomHook";
-import SuggestTrip from './SuggestTrip'
+import { useDebounce } from '../../../app/Layout/common/CustomHook';
+import SuggestTrip from './SuggestTrip';
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -26,19 +27,21 @@ const prepareTableDataSource = (type, city) => {
     } else {
       type = type.slice(0, -1);
 
-      return city[`${type}s`].map(value => {
-        return {
-          ...value[type],
-          image: (
-            <img
-              alt='value'
-              src={value[type].image}
-              style={{ width: '100%', maxWidth: '100px' }}
-            />
-          ),
-          key: value[type]._id,
-        };
-      });
+      return city[`${type}s`]
+        .filter(el => el[type])
+        .map(value => {
+          return {
+            ...value[type],
+            image: (
+              <img
+                alt='value'
+                src={value[type].image}
+                style={{ width: '100%', maxWidth: '100px' }}
+              />
+            ),
+            key: value[type]._id,
+          };
+        });
     }
   }
 
@@ -64,7 +67,9 @@ const searchCity = async keyWord => {
   let cities = [];
 
   try {
-    const response = await axios.get(`https://still-castle-31935.herokuapp.com/api/city/search?keyWord=${keyWord}`);
+    const response = await axios.get(
+      `https://still-castle-31935.herokuapp.com/api/city/search?keyWord=${keyWord}`
+    );
     cities = await response.data.cities;
 
     cities = cities.map(city => ({
@@ -110,13 +115,15 @@ const MyTrip = () => {
     setCity({});
     setLoadingSuggestPlaces(true);
 
-    fetchSuggestPlaces(value, time).then(city => {
-      setCity(city);
-      setLoadingSuggestPlaces(false);
-    }).catch(err => {
-      console.log(err);
-      setLoadingSuggestPlaces(false);
-    });
+    fetchSuggestPlaces(value, time)
+      .then(city => {
+        setCity(city);
+        setLoadingSuggestPlaces(false);
+      })
+      .catch(err => {
+        console.log(err);
+        setLoadingSuggestPlaces(false);
+      });
   };
 
   const onSelectChange = selectedRowKeys => {
@@ -192,7 +199,11 @@ const MyTrip = () => {
               />
             </Form.Item>
             <Form.Item>
-              <Button type='primary' htmlType='submit' loading={loadingSuggestPlaces}>
+              <Button
+                type='primary'
+                htmlType='submit'
+                loading={loadingSuggestPlaces}
+              >
                 Gợi ý chuyến đi
               </Button>
             </Form.Item>
@@ -201,50 +212,49 @@ const MyTrip = () => {
           <div className='food'>
             <div className='table-responsive'>
               {places.length > 0 && (
-                  <Table
-                      rowSelection={rowSelection}
-                      columns={columnsPlace}
-                      dataSource={places}
-                      pagination={false}
-                      title={() => (
-                          <Title level={4}>
-                            Những địa điểm tham quan phù hợp với số ngày của bạn
-                          </Title>
-                      )}
-                  />
+                <Table
+                  rowSelection={rowSelection}
+                  columns={columnsPlace}
+                  dataSource={places}
+                  pagination={false}
+                  title={() => (
+                    <Title level={4}>
+                      Những địa điểm tham quan phù hợp với số ngày của bạn
+                    </Title>
+                  )}
+                />
               )}
 
               {foods.length > 0 && (
-                  <Table
-                      rowSelection={rowSelection}
-                      columns={columnsFood}
-                      dataSource={foods}
-                      pagination={false}
-                      title={() => (
-                          <Title level={4}>Những món ăn bạn không nên bỏ lỡ</Title>
-                      )}
-                  />
+                <Table
+                  rowSelection={rowSelection}
+                  columns={columnsFood}
+                  dataSource={foods}
+                  pagination={false}
+                  title={() => (
+                    <Title level={4}>Những món ăn bạn không nên bỏ lỡ</Title>
+                  )}
+                />
               )}
 
               {hotels.length > 0 && (
-                  <Table
-                      rowSelection={rowSelection}
-                      columns={columnsHotel}
-                      dataSource={hotels}
-                      pagination={false}
-                      title={() => (
-                          <Title level={4}>
-                            Bạn có thể tham khảo những khách sạn dưới đây
-                          </Title>
-                      )}
-                  />
+                <Table
+                  rowSelection={rowSelection}
+                  columns={columnsHotel}
+                  dataSource={hotels}
+                  pagination={false}
+                  title={() => (
+                    <Title level={4}>
+                      Bạn có thể tham khảo những khách sạn dưới đây
+                    </Title>
+                  )}
+                />
               )}
             </div>
           </div>
 
           <Divider />
           <SuggestTrip />
-
         </div>
       </Container>
     </div>
