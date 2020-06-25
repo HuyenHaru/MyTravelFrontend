@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import { Container } from 'react-bootstrap';
 import {
@@ -8,9 +8,11 @@ import {
   Spin,
   Button,
   Table,
-  Typography,
+  Typography, Divider,
 } from 'antd';
 import { columnsTable } from '../../../app/utils/config';
+import { useDebounce } from "../../../app/Layout/common/CustomHook";
+import SuggestTrip from './SuggestTrip'
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -20,7 +22,7 @@ const { columnsPlace, columnsHotel, columnsFood } = columnsTable;
 const prepareTableDataSource = (type, city) => {
   if (Object.keys(city).length > 0) {
     if (type === 'places') {
-      return city.places.map(pl => ({ ...pl.place, key: pl.place._id }));
+      return city.places.map(pl => ({ ...pl, key: pl._id }));
     } else {
       type = type.slice(0, -1);
 
@@ -62,7 +64,7 @@ const searchCity = async keyWord => {
   let cities = [];
 
   try {
-    const response = await axios.get(`/api/city/search?keyWord=${keyWord}`);
+    const response = await axios.get(`https://still-castle-31935.herokuapp.com/api/city/search?keyWord=${keyWord}`);
     cities = await response.data.cities;
 
     cities = cities.map(city => ({
@@ -77,52 +79,56 @@ const searchCity = async keyWord => {
 };
 
 const MyTrip = () => {
-  const [state, setState] = useState({
-    data: [],
-    value: null,
-    fetching: false,
-    selectedRowKeys: [],
-    city: {},
-    places: [],
-  });
+  const [cities, setCities] = useState([]);
+  const [loadingCities, setLoadingCities] = useState(false);
+  const [loadingSuggestPlaces, setLoadingSuggestPlaces] = useState(false);
+  const [cityValue, setCityValue] = useState(null);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [city, setCity] = useState({});
+  const [searchTerm, setSearchTerm] = useState('');
+  const debounceSearchTerm = useDebounce(searchTerm, 800);
+
   const [form] = Form.useForm();
 
-  const fetchCity = async value => {
-    setState({ ...state, data: [], fetching: true });
-    let cities = await searchCity(value);
+  useEffect(() => {
+    if (debounceSearchTerm) {
+      setCities([]);
+      setLoadingCities(true);
 
-    setState({ ...state, data: cities, fetching: false });
-  };
+      searchCity(debounceSearchTerm).then(cities => {
+        setCities(cities);
+        setLoadingCities(false);
+      });
+    }
+  }, [debounceSearchTerm]);
 
-  const handleChange = value => {
-    setState({
-      ...state,
-      data: [],
-      fetching: false,
-      value: value,
-    });
-  };
+  const fetchCity = value => setSearchTerm(value);
+
+  const handleSelectCityChange = value => setCityValue(value);
 
   const handleSuggestPlace = async ({ city: { value }, time }) => {
-    setState({ ...state, city: [], fetching: true });
-    let city = await fetchSuggestPlaces(value, time);
+    setCity({});
+    setLoadingSuggestPlaces(true);
 
-    setState({ ...state, city, fetching: false });
+    fetchSuggestPlaces(value, time).then(city => {
+      setCity(city);
+      setLoadingSuggestPlaces(false);
+    }).catch(err => {
+      console.log(err);
+      setLoadingSuggestPlaces(false);
+    });
   };
 
   const onSelectChange = selectedRowKeys => {
     console.log('selectedRowKeys changed: ', selectedRowKeys);
-    setState({ ...state, selectedRowKeys });
+    setSelectedRowKeys(selectedRowKeys);
   };
 
-  const rowSelection = {
-    selectedRowKeys: state.selectedRowKeys,
-    onChange: onSelectChange,
-  };
+  const rowSelection = { selectedRowKeys, onChange: onSelectChange };
 
-  const places = prepareTableDataSource('places', state.city);
-  const hotels = prepareTableDataSource('hotels', state.city);
-  const foods = prepareTableDataSource('foods', state.city);
+  const places = prepareTableDataSource('places', city);
+  const hotels = prepareTableDataSource('hotels', city);
+  const foods = prepareTableDataSource('foods', city);
 
   return (
     <div className='my-trip'>
@@ -155,16 +161,16 @@ const MyTrip = () => {
             >
               <Select
                 labelInValue
-                value={state.value}
+                value={cityValue}
                 placeholder='Select City'
                 showSearch
-                notFoundContent={state.fetching ? <Spin size='small' /> : null}
+                notFoundContent={loadingCities ? <Spin size='small' /> : null}
                 filterOption={false}
                 onSearch={fetchCity}
-                onChange={handleChange}
+                onChange={handleSelectCityChange}
                 style={{ width: '100%' }}
               >
-                {state.data.map(d => (
+                {cities.map(d => (
                   <Option key={d.value}>{d.text}</Option>
                 ))}
               </Select>
@@ -186,8 +192,8 @@ const MyTrip = () => {
               />
             </Form.Item>
             <Form.Item>
-              <Button type='primary' htmlType='submit' loading={state.fetching}>
-                Gợi ý lịch trình
+              <Button type='primary' htmlType='submit' loading={loadingSuggestPlaces}>
+                Gợi ý chuyến đi
               </Button>
             </Form.Item>
           </Form>
@@ -195,46 +201,50 @@ const MyTrip = () => {
           <div className='food'>
             <div className='table-responsive'>
               {places.length > 0 && (
-                <Table
-                  rowSelection={rowSelection}
-                  columns={columnsPlace}
-                  dataSource={places}
-                  pagination={false}
-                  title={() => (
-                    <Title level={4}>
-                      Những địa điểm tham quan phù hợp với số ngày của bạn
-                    </Title>
-                  )}
-                />
+                  <Table
+                      rowSelection={rowSelection}
+                      columns={columnsPlace}
+                      dataSource={places}
+                      pagination={false}
+                      title={() => (
+                          <Title level={4}>
+                            Những địa điểm tham quan phù hợp với số ngày của bạn
+                          </Title>
+                      )}
+                  />
               )}
 
               {foods.length > 0 && (
-                <Table
-                  rowSelection={rowSelection}
-                  columns={columnsFood}
-                  dataSource={foods}
-                  pagination={false}
-                  title={() => (
-                    <Title level={4}>Những món ăn bạn không nên bỏ lỡ</Title>
-                  )}
-                />
+                  <Table
+                      rowSelection={rowSelection}
+                      columns={columnsFood}
+                      dataSource={foods}
+                      pagination={false}
+                      title={() => (
+                          <Title level={4}>Những món ăn bạn không nên bỏ lỡ</Title>
+                      )}
+                  />
               )}
 
               {hotels.length > 0 && (
-                <Table
-                  rowSelection={rowSelection}
-                  columns={columnsHotel}
-                  dataSource={hotels}
-                  pagination={false}
-                  title={() => (
-                    <Title level={4}>
-                      Bạn có thể tham khảo những khách sạn dưới đây
-                    </Title>
-                  )}
-                />
+                  <Table
+                      rowSelection={rowSelection}
+                      columns={columnsHotel}
+                      dataSource={hotels}
+                      pagination={false}
+                      title={() => (
+                          <Title level={4}>
+                            Bạn có thể tham khảo những khách sạn dưới đây
+                          </Title>
+                      )}
+                  />
               )}
             </div>
           </div>
+
+          <Divider />
+          <SuggestTrip />
+
         </div>
       </Container>
     </div>

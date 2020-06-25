@@ -21,6 +21,7 @@
     "history": "^4.10.1",
     "html-react-parser": "^0.9.1",
     "html-to-react": "^1.4.2",
+    "lodash": "^4.17.15",
     "material-table": "^1.53.0",
     "moment": "^2.26.0",
     "prop-types": "^15.7.2",
@@ -72,5 +73,5 @@
   "devDependencies": {
     "babel-plugin-react-html-attrs": "^2.1.0"
   },
-  "proxy": "http://localhost:5001"
+  "proxy": "https://still-castle-31935.herokuapp.com/"
 }
