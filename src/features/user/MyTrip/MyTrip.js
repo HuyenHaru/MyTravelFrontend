@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Container } from "react-bootstrap";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Container } from 'react-bootstrap';
 import {
   Form,
   InputNumber,
@@ -10,33 +10,35 @@ import {
   Table,
   Typography,
   Divider,
-} from "antd";
-import { columnsTable } from "../../../app/utils/config";
-import { useDebounce } from "../../../app/Layout/common/CustomHook";
-import SuggestTrip from "./SuggestTrip";
+  Row,
+  Col,
+} from 'antd';
+import { columnsTable } from '../../../app/utils/config';
+import { useDebounce } from '../../../app/Layout/common/CustomHook';
+import SuggestTrip from './SuggestTrip';
 
 const { Option } = Select;
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 const { columnsPlace, columnsHotel, columnsFood } = columnsTable;
 
 const prepareTableDataSource = (type, city) => {
   if (Object.keys(city).length > 0) {
-    if (type === "places") {
-      return city.places.map((pl) => ({ ...pl, key: pl._id }));
+    if (type === 'places') {
+      return city.places.map(pl => ({ ...pl, key: pl._id }));
     } else {
       type = type.slice(0, -1);
 
       return city[`${type}s`]
-        .filter((el) => el[type])
-        .map((value) => {
+        .filter(el => el[type])
+        .map(value => {
           return {
             ...value[type],
             image: (
               <img
-                alt="value"
+                alt='value'
                 src={value[type].image}
-                style={{ width: "100%", maxWidth: "100px" }}
+                style={{ width: '100%', maxWidth: '100px' }}
               />
             ),
             key: value[type]._id,
@@ -63,7 +65,7 @@ const fetchSuggestPlaces = async (cityId, time) => {
   return city;
 };
 
-const searchCity = async (keyWord) => {
+const searchCity = async keyWord => {
   let cities = [];
 
   try {
@@ -72,7 +74,7 @@ const searchCity = async (keyWord) => {
     );
     cities = await response.data.cities;
 
-    cities = cities.map((city) => ({
+    cities = cities.map(city => ({
       text: city.name,
       value: city.id,
     }));
@@ -88,10 +90,19 @@ const MyTrip = () => {
   const [loadingCities, setLoadingCities] = useState(false);
   const [loadingSuggestPlaces, setLoadingSuggestPlaces] = useState(false);
   const [cityValue, setCityValue] = useState(null);
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState({
+    place: [],
+    hotel: [],
+    food: [],
+  });
   const [city, setCity] = useState({});
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const debounceSearchTerm = useDebounce(searchTerm, 800);
+  const [prices, setPrices] = useState({
+    place: 0,
+    hotel: 0,
+    food: 0,
+  });
 
   const [form] = Form.useForm();
 
@@ -100,159 +111,266 @@ const MyTrip = () => {
       setCities([]);
       setLoadingCities(true);
 
-      searchCity(debounceSearchTerm).then((cities) => {
+      searchCity(debounceSearchTerm).then(cities => {
         setCities(cities);
         setLoadingCities(false);
       });
     }
+
+    return () => {
+      setPrices({
+        place: 0,
+        hotel: 0,
+        food: 0,
+      });
+    };
   }, [debounceSearchTerm]);
 
-  const fetchCity = (value) => setSearchTerm(value);
+  const fetchCity = value => setSearchTerm(value);
 
-  const handleSelectCityChange = (value) => setCityValue(value);
+  const handleSelectCityChange = value => setCityValue(value);
 
   const handleSuggestPlace = async ({ city: { value }, time }) => {
     setCity({});
     setLoadingSuggestPlaces(true);
 
     fetchSuggestPlaces(value, time)
-      .then((city) => {
+      .then(city => {
         setCity(city);
         setLoadingSuggestPlaces(false);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
         setLoadingSuggestPlaces(false);
       });
   };
 
-  const onSelectChange = (selectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
-    setSelectedRowKeys(selectedRowKeys);
+  const onSelectPlaceChange = selectedPlaceRowKeys => {
+    let placePrice = prices.place;
+    selectedPlaceRowKeys.forEach(rowKey => {
+      let place = places.find(place => place._id === rowKey);
+
+      if (place) {
+        placePrice += Number(place.price);
+      }
+    });
+
+    setPrices({ ...prices, place: placePrice });
+    setSelectedRowKeys({
+      ...selectedRowKeys,
+      place: selectedPlaceRowKeys,
+    });
   };
 
-  const rowSelection = { selectedRowKeys, onChange: onSelectChange };
+  const onSelectHotelChange = selectedHotelRowKeys => {
+    let hotelPrice = prices.hotel;
+    selectedHotelRowKeys.forEach(rowKey => {
+      let hotel = hotels.find(hotel => hotel._id === rowKey);
 
-  const places = prepareTableDataSource("places", city);
-  const hotels = prepareTableDataSource("hotels", city);
-  const foods = prepareTableDataSource("foods", city);
+      if (hotel) {
+        hotelPrice += Number(hotel.price);
+      }
+    });
+
+    setPrices({ ...prices, hotel: hotelPrice });
+
+    setSelectedRowKeys({
+      ...selectedRowKeys,
+      hotel: selectedHotelRowKeys,
+    });
+  };
+
+  const onSelectFoodChange = selectedFoodRowKeys => {
+    let foodPrice = prices.food;
+    selectedFoodRowKeys.forEach(rowKey => {
+      let food = foods.find(food => food._id === rowKey);
+
+      if (food) {
+        foodPrice += Number(food.price);
+      }
+    });
+
+    setPrices({ ...prices, food: foodPrice });
+
+    setSelectedRowKeys({
+      ...selectedRowKeys,
+      food: selectedFoodRowKeys,
+    });
+  };
+
+  // const rowSelection = { selectedRowKeys, onChange: onSelectChange };
+  const rowPlaceSelection = {
+    selectedRowKeys: selectedRowKeys.place,
+    onChange: onSelectPlaceChange,
+  };
+  const rowHotelSelection = {
+    selectedRowKeys: selectedRowKeys.hotel,
+    onChange: onSelectHotelChange,
+  };
+  const rowFoodSelection = {
+    selectedRowKeys: selectedRowKeys.food,
+    onChange: onSelectFoodChange,
+  };
+
+  const places = prepareTableDataSource('places', city);
+  const hotels = prepareTableDataSource('hotels', city).map(hotel => ({
+    ...hotel,
+    price: Math.round((Number(hotel.priceMin) + Number(hotel.priceMax)) / 2),
+  }));
+  const foods = prepareTableDataSource('foods', city);
 
   return (
-    <div className="my-trip">
-      <div className="module-banner">
+    <div className='my-trip'>
+      <div className='module-banner'>
         <img
-          className="img-respon img-banner"
-          src="./../../assets/images/banner-post.jpg"
-          alt=""
+          className='img-respon img-banner'
+          src='./../../assets/images/banner-post.jpg'
+          alt=''
         />
-        <div className="title-bn">
+        <div className='title-bn'>
           <h2>Lịch trình của tôi</h2>
           <div>Trang chủ &nbsp;/&nbsp; Bạn muốn đến?</div>
         </div>
       </div>
       <Container>
-        <div className="content-trip">
-          <h3 className="paci-font">
-            Hãy tự tạo cho mình một lịch trình phù hợp với quỹ thời gian và hầu
-            bao của bản thân nào!
-          </h3>
-          <Form form={form} onFinish={handleSuggestPlace}>
-            <Form.Item
-              name="city"
-              rules={[
-                {
-                  required: true,
-                  message: "Vui lòng nhập tên tỉnh",
-                },
-              ]}
-            >
-              <Select
-                labelInValue
-                value={cityValue}
-                placeholder="Tìm kiếm tỉnh/thành phố"
-                showSearch
-                notFoundContent={loadingCities ? <Spin size="small" /> : null}
-                filterOption={false}
-                onSearch={fetchCity}
-                onChange={handleSelectCityChange}
-                style={{ width: "100%" }}
-              >
-                {cities.map((d) => (
-                  <Option key={d.value}>{d.text}</Option>
-                ))}
-              </Select>
-            </Form.Item>
-            <Form.Item
-              name="time"
-              rules={[
-                {
-                  required: true,
-                  message: "Vui lòng nhập số ngày du lịch",
-                },
-              ]}
-              style={{ width: "100%" }}
-            >
-              <InputNumber
-                placeholder="Nhập số ngày du lịch"
-                min={1}
-                style={{ width: "100%" }}
-              />
-            </Form.Item>
-            <Form.Item>
-              <Button
-                type="primary"
-                className="fr"
-                htmlType="submit"
-                loading={loadingSuggestPlaces}
-              >
-                Gợi ý chuyến đi
-              </Button>
-            </Form.Item>
-          </Form>
-
-          <div className="food">
-            <div className="table-responsive">
-              {places.length > 0 && (
-                <Table
-                  rowSelection={rowSelection}
-                  columns={columnsPlace}
-                  dataSource={places}
-                  pagination={false}
-                  title={() => (
-                    <Title level={4}>
-                      Những địa điểm tham quan phù hợp với số ngày của bạn
-                    </Title>
+        <div className='content-trip'>
+          <Row gutter={[16, 16]}>
+            <Col xs={24} sm={24} md={18} lg={18} xl={18}>
+              <h3 className='paci-font'>
+                Hãy tự tạo cho mình một lịch trình phù hợp với quỹ thời gian và
+                hầu bao của bản thân nào!
+              </h3>
+              <Form form={form} onFinish={handleSuggestPlace}>
+                <Form.Item
+                  name='city'
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Vui lòng nhập tên tỉnh',
+                    },
+                  ]}
+                >
+                  <Select
+                    labelInValue
+                    value={cityValue}
+                    placeholder='Tìm kiếm tỉnh/thành phố'
+                    showSearch
+                    notFoundContent={
+                      loadingCities ? <Spin size='small' /> : null
+                    }
+                    filterOption={false}
+                    onSearch={fetchCity}
+                    onChange={handleSelectCityChange}
+                    style={{ width: '100%' }}
+                  >
+                    {cities.map(d => (
+                      <Option key={d.value}>{d.text}</Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+                <Form.Item
+                  name='time'
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Vui lòng nhập số ngày du lịch',
+                    },
+                  ]}
+                  style={{ width: '100%' }}
+                >
+                  <InputNumber
+                    placeholder='Nhập số ngày du lịch'
+                    min={1}
+                    style={{ width: '100%' }}
+                  />
+                </Form.Item>
+                <Form.Item>
+                  <Button
+                    type='primary'
+                    className='fr'
+                    htmlType='submit'
+                    loading={loadingSuggestPlaces}
+                  >
+                    Gợi ý chuyến đi
+                  </Button>
+                </Form.Item>
+              </Form>
+              <div className='food'>
+                <div className='table-responsive'>
+                  {places.length > 0 && (
+                    <Table
+                      rowSelection={rowPlaceSelection}
+                      columns={columnsPlace}
+                      dataSource={places}
+                      pagination={false}
+                      title={() => (
+                        <Title level={4}>
+                          Những địa điểm tham quan phù hợp với số ngày của bạn
+                        </Title>
+                      )}
+                    />
                   )}
-                />
-              )}
 
-              {foods.length > 0 && (
-                <Table
-                  rowSelection={rowSelection}
-                  columns={columnsFood}
-                  dataSource={foods}
-                  pagination={false}
-                  title={() => (
-                    <Title level={4}>Những món ăn bạn không nên bỏ lỡ</Title>
+                  {foods.length > 0 && (
+                    <Table
+                      rowSelection={rowFoodSelection}
+                      columns={columnsFood}
+                      dataSource={foods}
+                      pagination={false}
+                      title={() => (
+                        <Title level={4}>
+                          Những món ăn bạn không nên bỏ lỡ
+                        </Title>
+                      )}
+                    />
                   )}
-                />
-              )}
 
-              {hotels.length > 0 && (
-                <Table
-                  rowSelection={rowSelection}
-                  columns={columnsHotel}
-                  dataSource={hotels}
-                  pagination={false}
-                  title={() => (
-                    <Title level={4}>
-                      Bạn có thể tham khảo những khách sạn dưới đây
-                    </Title>
+                  {hotels.length > 0 && (
+                    <Table
+                      rowSelection={rowHotelSelection}
+                      columns={columnsHotel}
+                      dataSource={hotels}
+                      pagination={false}
+                      title={() => (
+                        <Title level={4}>
+                          Bạn có thể tham khảo những khách sạn dưới đây
+                        </Title>
+                      )}
+                    />
                   )}
-                />
-              )}
-            </div>
-          </div>
+                </div>
+              </div>
+            </Col>
+            <Col xs={24} sm={24} md={6} lg={6} xl={6}>
+              <Title level={4}>Giá cả</Title>
+
+              <div>
+                <Text strong>Places: </Text>
+                <Text>{prices.place}</Text>
+                <Text> VND</Text>
+              </div>
+
+              <div>
+                <Text strong>Hotels: </Text>
+                <Text>{prices.hotel}</Text>
+                <Text> VND</Text>
+              </div>
+
+              <div>
+                <Text strong>Foods: </Text>
+                <Text>{prices.food}</Text>
+                <Text> VND</Text>
+              </div>
+
+              <Divider />
+
+              <div>
+                <Text strong>Total: </Text>
+                <Text>{prices.place + prices.hotel + prices.food}</Text>
+                <Text> VND</Text>
+              </div>
+            </Col>
+          </Row>
 
           <Divider />
           <SuggestTrip />
