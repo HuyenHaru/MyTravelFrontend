@@ -5,7 +5,12 @@ import '../../assets/css/header.css';
 import '../../assets/css/footer.css';
 import '../../assets/css/responsive.css';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
-import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
+import {
+  Switch,
+  Route,
+  BrowserRouter as Router,
+  HashRouter,
+} from 'react-router-dom';
 
 import Menu from '../../features/navbar/Menu';
 import Footer from './Footer';
@@ -20,7 +25,7 @@ import PrivateRoute from './common/PrivateRoute';
 import MyAccount from '../../features/user/MyAccount/MyAccount';
 import MyTrip from '../../features/user/MyTrip/MyTrip';
 import PostAction from '../../features/post/PostAction/PostAction';
-import {setDefaultAxios} from "../utils/helper";
+import { setDefaultAxios } from '../utils/helper';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -37,7 +42,7 @@ export default function App() {
 
   return (
     <div className='wrapper'>
-      <Router>
+      <HashRouter>
         <Toastr />
         <Menu />
         <main className='main-page'>
@@ -57,7 +62,7 @@ export default function App() {
           </Switch>
         </main>
         <Footer />
-      </Router>
+      </HashRouter>
     </div>
   );
 }
