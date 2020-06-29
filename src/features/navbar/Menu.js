@@ -16,7 +16,7 @@ const Menubar = () => {
       <Container>
         <Navbar collapseOnSelect expand='lg'>
           <Navbar.Brand as={NavLink} to='/'>
-            <img className='logo' src='./../../assets/images/logo.png' alt='' />
+            <img className='logo' src='/assets/images/logo.png' alt='' />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />
           <Navbar.Collapse id='responsive-navbar-nav'>
