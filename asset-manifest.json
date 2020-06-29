@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/MyTravelFrontend/static/css/main.fbc179dd.chunk.css",
+    "main.js": "/MyTravelFrontend/static/js/main.f0633555.chunk.js",
+    "main.js.map": "/MyTravelFrontend/static/js/main.f0633555.chunk.js.map",
+    "runtime~main.js": "/MyTravelFrontend/static/js/runtime~main.7aaea2c1.js",
+    "runtime~main.js.map": "/MyTravelFrontend/static/js/runtime~main.7aaea2c1.js.map",
+    "static/css/2.6b7afa49.chunk.css": "/MyTravelFrontend/static/css/2.6b7afa49.chunk.css",
+    "static/js/2.beb3f5e8.chunk.js": "/MyTravelFrontend/static/js/2.beb3f5e8.chunk.js",
+    "static/js/2.beb3f5e8.chunk.js.map": "/MyTravelFrontend/static/js/2.beb3f5e8.chunk.js.map",
+    "index.html": "/MyTravelFrontend/index.html",
+    "precache-manifest.0cdaca75d61e662d9c6661a1ad135b39.js": "/MyTravelFrontend/precache-manifest.0cdaca75d61e662d9c6661a1ad135b39.js",
+    "service-worker.js": "/MyTravelFrontend/service-worker.js",
+    "static/css/2.6b7afa49.chunk.css.map": "/MyTravelFrontend/static/css/2.6b7afa49.chunk.css.map",
+    "static/css/main.fbc179dd.chunk.css.map": "/MyTravelFrontend/static/css/main.fbc179dd.chunk.css.map",
+    "static/media/style.css": "/MyTravelFrontend/static/media/hue.ce324410.jpg"
+  }
+}
