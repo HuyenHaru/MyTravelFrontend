@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Carousel, Spin, Divider } from "antd";
-import { Container, Row } from "reactstrap";
-import { fetchPosts } from "../post.actions";
-import ItemPost from "../ItemPost/ItemPost";
-import BannerPost from "../ItemPost/BannerPost";
-import { actionTypes } from "../../../app/utils/config";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Carousel, Spin, Divider, Pagination } from 'antd';
+import { Container, Row } from 'reactstrap';
+import { fetchPosts } from '../post.actions';
+import ItemPost from '../ItemPost/ItemPost';
+import BannerPost from '../ItemPost/BannerPost';
+import { actionTypes } from '../../../app/utils/config';
 
-const NewsList = (props) => {
+const NewsList = props => {
   const dispatch = useDispatch();
-  const { loading, actionType } = useSelector((state) => state.async);
-  const { docs: posts } = useSelector((state) => state.post.posts);
-  const { authUser } = useSelector((state) => state.user);
+  const { loading, actionType } = useSelector(state => state.async);
+  const { docs: posts, totalDocs } = useSelector(state => state.post.posts);
+  const { authUser } = useSelector(state => state.user);
 
   const [postsCarousel, setPostsCarousel] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchPosts());
+    dispatch(fetchPosts(1, 18));
 
     // eslint-disable-next-line
   }, []);
@@ -29,6 +29,10 @@ const NewsList = (props) => {
     // eslint-disable-next-line
   }, [posts]);
 
+  const showTotal = total => `Tổng số: ${total} bài viết`;
+
+  const paginate = page => dispatch(fetchPosts(page, 3));
+
   const fetchPostsLoading =
     actionType === actionTypes.post.FETCH_POSTS ? loading : false;
 
@@ -36,19 +40,19 @@ const NewsList = (props) => {
 
   return (
     <Spin spinning={fetchPostsLoading}>
-      <div className="main-wrap">
+      <div className='main-wrap'>
         {/* NOI DUNG */}
-        <div className="igi_module news-list">
+        <div className='igi_module news-list'>
           <Container>
             <Carousel autoplay>
-              {postsCarousel.map((post) => (
+              {postsCarousel.map(post => (
                 <BannerPost post={post} key={post._id} />
               ))}
             </Carousel>
             <Divider />
             <Row>
               {posts &&
-                posts.map((post) => (
+                posts.map(post => (
                   <ItemPost
                     post={post}
                     key={post._id}
@@ -56,6 +60,15 @@ const NewsList = (props) => {
                     authUser={authUser}
                   />
                 ))}
+
+              <Pagination
+                size='small'
+                total={totalDocs}
+                showTotal={showTotal}
+                onChange={paginate}
+                hideOnSinglePage
+                pageSize={18}
+              />
             </Row>
           </Container>
         </div>

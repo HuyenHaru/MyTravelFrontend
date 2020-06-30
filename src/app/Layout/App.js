@@ -5,12 +5,7 @@ import '../../assets/css/header.css';
 import '../../assets/css/footer.css';
 import '../../assets/css/responsive.css';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
-import {
-  Switch,
-  Route,
-  BrowserRouter as Router,
-  HashRouter,
-} from 'react-router-dom';
+import { Switch, Route, HashRouter } from 'react-router-dom';
 
 import Menu from '../../features/navbar/Menu';
 import Footer from './Footer';
