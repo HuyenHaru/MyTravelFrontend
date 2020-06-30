@@ -9,13 +9,13 @@ import ItemPost from "../../post/ItemPost/ItemPost";
 const MyAccount = (props) => {
   const dispatch = useDispatch();
   const { docs: posts } = useSelector((state) => state.post.posts);
-
+  const { authUser } = useSelector((state) => state.user);
   useEffect(() => {
     dispatch(fetchPostProfile());
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(posts);
+  const authenticated = Object.keys(authUser).length > 0;
   return (
     <div className="my-account">
       <Container>
@@ -106,7 +106,14 @@ const MyAccount = (props) => {
               <h2 className="title-profile">Bài viết của tôi</h2>
               <Row>
                 {posts && posts.length > 0 ? (
-                  posts.map((post) => <ItemPost post={post} key={post._id} />)
+                  posts.map((post) => (
+                    <ItemPost
+                      post={post}
+                      key={post._id}
+                      authenticated={authenticated}
+                      authUser={authUser}
+                    />
+                  ))
                 ) : (
                   <div>Bạn chưa có bài viết nào</div>
                 )}
