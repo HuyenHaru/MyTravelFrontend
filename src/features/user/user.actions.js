@@ -5,6 +5,8 @@ import {
   asyncActionFinish,
   asyncActionError,
 } from '../async/async.actions';
+import { closeModal } from '../modal/modal.actions';
+import { toastr } from 'react-redux-toastr';
 
 export const login = (userCredentials, history) => dispatch => {
   const { email, password } = userCredentials;
@@ -73,6 +75,34 @@ export const getAuthUser = token => dispatch => {
     .catch(err => {
       console.log(err);
     });
+};
+
+export const uploadProfileImage = file => async dispatch => {
+  const formData = new FormData();
+  const config = {
+    headers: {
+      'content-type': 'multipart/form-data',
+    },
+  };
+  formData.append('image', file.originFileObj);
+
+  dispatch(asyncActionStart('uploadAvatar'));
+  try {
+    const res = await axios.post('/api/auth/me/upload', formData, config);
+    const { user } = res.data;
+
+    dispatch({ type: SET_AUTH_USER, payload: { user } });
+    dispatch(getAuthUser());
+    // dispatch(getAuthProfile());
+    dispatch(asyncActionFinish());
+    dispatch(closeModal());
+    toastr.success('Success', 'Your avatar has been updated');
+  } catch (err) {
+    console.log(err.response.data);
+
+    dispatch(asyncActionError());
+    toastr.error('Oops', 'Some thing went wrong, please try again');
+  }
 };
 
 export const logout = () => dispatch => {

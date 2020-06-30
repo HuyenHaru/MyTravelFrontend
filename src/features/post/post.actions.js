@@ -24,8 +24,9 @@ export const fetchPosts = (page = null, limit = null) => dispatch => {
   const query = page && limit ? `?page=${page}&limit=${limit}` : '';
 
   axios
-    .get(` /api/post/${query}`)
+    .get(`/api/post/${query}`)
     .then(res => {
+      console.log(res.data);
       dispatch({
         type: GET_POSTS,
         payload: res.data,
@@ -47,7 +48,7 @@ export const fetchPostsByType = (
   const query = page && limit ? `?page=${page}&limit=${limit}` : '';
 
   axios
-    .get(` /api/post/type/${type}/${query}`)
+    .get(`/api/post/type/${type}/${query}`)
     .then(res => {
       dispatch({
         type: GET_POSTS_BY_TYPE,
@@ -67,7 +68,7 @@ export const fetchPostsByType = (
 export const fetchPost = id => dispatch => {
   dispatch(asyncActionStart(actionTypes.post.FETCH_POST));
   axios
-    .get(` /api/post/${id}`)
+    .get(`/api/post/${id}`)
     .then(res => {
       const { post } = res.data;
       dispatch({ type: GET_POST, payload: { post } });
@@ -79,11 +80,17 @@ export const fetchPost = id => dispatch => {
     });
 };
 
-export const fetchPostProfile = (page = null, limit = null) => dispatch => {
+export const fetchPostProfile = (token, page = 1, limit = 6) => dispatch => {
   dispatch(asyncActionStart(actionTypes.post.FETCH_POSTS));
 
+  // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
   axios
-    .get(` /api/post/profile/?page=1&limit=3`)
+    .get(`/api/post/me/?page=${page}&limit=${limit}`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
     .then(res => {
       const { docs, total, limit, page, pages } = res.data;
       dispatch({
@@ -118,7 +125,7 @@ export const createPost = (newPost, history) => dispatch => {
   dispatch(asyncActionStart(actionTypes.post.CREATE_POST));
 
   axios
-    .post(` /api/post/`, formData, config)
+    .post(`/api/post/`, formData, config)
     .then(res => {
       const { post } = res.data;
 
@@ -154,7 +161,7 @@ export const updatePost = (updatedPost, history) => dispatch => {
   dispatch(asyncActionStart(actionTypes.post.UPDATE_POST));
 
   axios
-    .post(` /api/post/${updatedPost._id}`, formData, config)
+    .post(`/api/post/${updatedPost._id}`, formData, config)
     .then(res => {
       const { post } = res.data;
 
@@ -174,7 +181,7 @@ export const commentOnPost = (postId, comment) => async dispatch => {
   dispatch(asyncActionStart(actionTypes.post.CREATE_POST));
 
   try {
-    const response = await axios.post(` /api/post/comment/${postId}`, comment);
+    const response = await axios.post(`/api/post/comment/${postId}`, comment);
     const { post } = response.data;
 
     dispatch({ type: COMMENT_ON_POST, payload: { post } });
@@ -191,7 +198,7 @@ export const deletePostComment = (postId, commentId) => async dispatch => {
 
   try {
     const response = await axios.delete(
-      ` /api/post/comment/${postId}/${commentId}`
+      `/api/post/comment/${postId}/${commentId}`
     );
     const { post } = response.data;
 
@@ -208,7 +215,7 @@ export const likePost = postId => async dispatch => {
   dispatch(asyncActionStart(actionTypes.post.LIKE_POST));
 
   try {
-    const response = await axios.put(` /api/post/like/${postId}`);
+    const response = await axios.put(`/api/post/like/${postId}`);
     const { post } = response.data;
 
     dispatch({ type: LIKE_POST, payload: { post } });
@@ -224,7 +231,7 @@ export const unlikePost = postId => async dispatch => {
   dispatch(asyncActionStart(actionTypes.post.UNLIKE_POST));
 
   try {
-    const response = await axios.put(` /api/post/unlike/${postId}`);
+    const response = await axios.put(`/api/post/unlike/${postId}`);
     const { post } = response.data;
 
     dispatch({ type: UNLIKE_POST, payload: { post } });

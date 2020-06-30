@@ -21,24 +21,29 @@ import MyAccount from '../../features/user/MyAccount/MyAccount';
 import MyTrip from '../../features/user/MyTrip/MyTrip';
 import PostAction from '../../features/post/PostAction/PostAction';
 import { setDefaultAxios } from '../utils/helper';
+import ModalManager from '../../features/modal/ModalManger';
 
 export default function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    initApp();
+    // eslint-disable-next-line
+  }, []);
+
+  const initApp = async () => {
     const token = localStorage.getItem('token');
     if (token) {
       setDefaultAxios();
-      dispatch(getAuthUser(token));
+      await dispatch(getAuthUser(token));
     }
-
-    // eslint-disable-next-line
-  }, []);
+  };
 
   return (
     <div className='wrapper'>
       <HashRouter>
         <Toastr />
+        <ModalManager />
         <Menu />
         <main className='main-page'>
           <Switch>
