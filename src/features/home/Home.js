@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Carousel, Row, Col, Spin } from 'antd';
-import { fetchPosts, fetchPostsByType } from '../post/post.actions';
-import BannerHome from './BannerHome';
-import ItemPost from '../post/ItemPost/ItemPost';
-import { Container } from 'reactstrap';
-import { actionTypes } from '../../app/utils/config';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Carousel, Row, Col, Spin } from "antd";
+import { fetchPosts, fetchPostsByType } from "../post/post.actions";
+import BannerHome from "./BannerHome";
+import ItemPost from "../post/ItemPost/ItemPost";
+import { Container } from "reactstrap";
+import { actionTypes } from "../../app/utils/config";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { docs: posts } = useSelector(state => state.post.posts);
-  const { loading, actionType } = useSelector(state => state.async);
+  const { docs: posts } = useSelector((state) => state.post.posts);
+  const { loading, actionType } = useSelector((state) => state.async);
   const {
     experiencePosts: { docs: experiencePosts },
     foodPosts: { docs: foodPosts },
     placePosts: { docs: placePosts },
-  } = useSelector(state => state.post);
+  } = useSelector((state) => state.post);
   const [postsCarousel, setPostsCarousel] = useState([]);
 
   useEffect(() => {
     dispatch(fetchPosts());
-    dispatch(fetchPostsByType('experience', 1, 6));
-    dispatch(fetchPostsByType('food', 1, 6));
-    dispatch(fetchPostsByType('place', 1, 6));
+    dispatch(fetchPostsByType("experience", 1, 6));
+    dispatch(fetchPostsByType("food", 1, 6));
+    dispatch(fetchPostsByType("place", 1, 6));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -41,26 +41,26 @@ const Home = () => {
   return (
     <Spin spinning={loadingGrid}>
       <main>
-        <div className=''>
-          <div className='igi_banner'>
+        <div className="">
+          <div className="igi_banner">
             <Carousel autoplay>
-              {postsCarousel.map(post => (
+              {postsCarousel.map((post) => (
                 <BannerHome post={post} key={post._id} />
               ))}
             </Carousel>
           </div>
 
-          <div className='intro igi_module'>
+          <div className="intro igi_module">
             <Container>
               <Row>
                 <Col lg={12} md={12} sm={12} xs={24}>
-                  <img src='/assets/images/gioithieu.JPG' alt='' />
+                  <img src="./assets/images/gioithieu.JPG" alt="" />
                 </Col>
                 <Col lg={12} md={12} sm={12} xs={24}>
-                  <div className='content-gt'>
+                  <div className="content-gt">
                     <div>
-                      <h3 className='paci-font'>Giới thiệu chung</h3>
-                      <h2 className='title-gt'>Du lịch Việt Nam</h2>
+                      <h3 className="paci-font">Giới thiệu chung</h3>
+                      <h2 className="title-gt">Du lịch Việt Nam</h2>
                     </div>
                     <div>
                       <p>
@@ -86,51 +86,51 @@ const Home = () => {
             </Container>
           </div>
 
-          <div className='igi_module news-list'>
+          <div className="igi_module news-list">
             <Container>
-              <div className='border-bot'>
-                <span className='tt-home'>Kinh nghiệm du lịch từ A-Z</span>
+              <div className="border-bot">
+                <span className="tt-home">Kinh nghiệm du lịch từ A-Z</span>
               </div>
               <Row>
                 {experiencePosts &&
                   experiencePosts.length > 0 &&
-                  experiencePosts.map(post => (
+                  experiencePosts.map((post) => (
                     <ItemPost post={post} key={post._id} />
                   ))}
               </Row>
-              <Link to='/cam-nang-du-lich'>Xem thêm</Link>
+              <Link to="/cam-nang-du-lich">Xem thêm</Link>
             </Container>
           </div>
 
-          <div className='igi_module news-list'>
+          <div className="igi_module news-list">
             <Container>
-              <div className='border-bot'>
-                <span className='tt-home'>Ăn & chơi</span>
+              <div className="border-bot">
+                <span className="tt-home">Ăn & chơi</span>
               </div>
               <Row>
                 {foodPosts &&
                   foodPosts.length > 0 &&
-                  foodPosts.map(post => (
+                  foodPosts.map((post) => (
                     <ItemPost post={post} key={post._id} />
                   ))}
               </Row>
-              <Link to='/cam-nang-du-lich'>Xem thêm</Link>
+              <Link to="/cam-nang-du-lich">Xem thêm</Link>
             </Container>
           </div>
 
-          <div className='igi_module news-list'>
+          <div className="igi_module news-list">
             <Container>
-              <div className='border-bot'>
-                <span className='tt-home'>Điểm check-in siêu hot</span>
+              <div className="border-bot">
+                <span className="tt-home">Điểm check-in siêu hot</span>
               </div>
               <Row>
                 {placePosts &&
                   placePosts.length > 0 &&
-                  placePosts.map(post => (
+                  placePosts.map((post) => (
                     <ItemPost post={post} key={post._id} />
                   ))}
               </Row>
-              <Link to='/cam-nang-du-lich'>Xem thêm</Link>
+              <Link to="/cam-nang-du-lich">Xem thêm</Link>
             </Container>
           </div>
         </div>

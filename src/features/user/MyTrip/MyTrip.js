@@ -224,7 +224,7 @@ const MyTrip = () => {
       <div className="module-banner">
         <img
           className="img-respon img-banner"
-          src="./../../assets/images/banner-post.jpg"
+          src="./assets/images/banner-post.jpg"
           alt=""
         />
         <div className="title-bn">
