@@ -1,94 +1,101 @@
-import axios from 'axios';
-import { SET_AUTH_USER, LOGOUT } from './user.constant';
+import axios from "axios";
+import { SET_AUTH_USER, LOGOUT } from "./user.constant";
 import {
   asyncActionStart,
   asyncActionFinish,
   asyncActionError,
-} from '../async/async.actions';
-import { closeModal } from '../modal/modal.actions';
-import { toastr } from 'react-redux-toastr';
+} from "../async/async.actions";
+import { closeModal } from "../modal/modal.actions";
+import { toastr } from "react-redux-toastr";
 
-export const login = (userCredentials, history) => dispatch => {
+export const login = (userCredentials, history) => (dispatch) => {
   const { email, password } = userCredentials;
 
-  dispatch(asyncActionStart('login'));
+  dispatch(asyncActionStart("login"));
 
   axios
-    .post('/api/auth/login', { email, password })
-    .then(res => {
-      const token = res.data.token;
-      localStorage.setItem('token', token);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
-      return axios.get('/api/auth/');
+    .post("https://still-castle-31935.herokuapp.com/api/auth/login", {
+      email,
+      password,
     })
-    .then(res => {
+    .then((res) => {
+      const token = res.data.token;
+      localStorage.setItem("token", token);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+      return axios.get("https://still-castle-31935.herokuapp.com/api/auth/");
+    })
+    .then((res) => {
       const user = res.data;
 
       dispatch({ type: SET_AUTH_USER, payload: { user } });
       dispatch(asyncActionFinish());
-      history.push('/');
+      history.push("/");
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       dispatch(asyncActionError(err.response.data));
     });
 };
 
-export const register = (userCredentials, history) => dispatch => {
+export const register = (userCredentials, history) => (dispatch) => {
   const { username, email, password, confirmPassword } = userCredentials;
   axios
-    .post('/api/auth/register', {
+    .post("https://still-castle-31935.herokuapp.com/api/auth/register", {
       username,
       email,
       password,
       confirmPassword,
     })
-    .then(res => {
+    .then((res) => {
       const token = res.data.token;
-      localStorage.setItem('token', token);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      localStorage.setItem("token", token);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      return axios.get('/api/auth/');
+      return axios.get("https://still-castle-31935.herokuapp.com/api/auth/");
     })
-    .then(res => {
+    .then((res) => {
       const user = res.data;
 
       dispatch({ type: SET_AUTH_USER, payload: { user } });
-      history.push('/');
+      history.push("/");
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 };
 
-export const getAuthUser = token => dispatch => {
-  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+export const getAuthUser = (token) => (dispatch) => {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
   axios
-    .get('/api/auth/')
-    .then(res => {
+    .get("https://still-castle-31935.herokuapp.com/api/auth/")
+    .then((res) => {
       const user = res.data;
 
       dispatch({ type: SET_AUTH_USER, payload: { user } });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 };
 
-export const uploadProfileImage = file => async dispatch => {
+export const uploadProfileImage = (file) => async (dispatch) => {
   const formData = new FormData();
   const config = {
     headers: {
-      'content-type': 'multipart/form-data',
+      "content-type": "multipart/form-data",
     },
   };
-  formData.append('image', file.originFileObj);
+  formData.append("image", file.originFileObj);
 
-  dispatch(asyncActionStart('uploadAvatar'));
+  dispatch(asyncActionStart("uploadAvatar"));
   try {
-    const res = await axios.post('/api/auth/me/upload', formData, config);
+    const res = await axios.post(
+      "https://still-castle-31935.herokuapp.com/api/auth/me/upload",
+      formData,
+      config
+    );
     const { user } = res.data;
 
     dispatch({ type: SET_AUTH_USER, payload: { user } });
@@ -96,17 +103,17 @@ export const uploadProfileImage = file => async dispatch => {
     // dispatch(getAuthProfile());
     dispatch(asyncActionFinish());
     dispatch(closeModal());
-    toastr.success('Success', 'Your avatar has been updated');
+    toastr.success("Success", "Your avatar has been updated");
   } catch (err) {
     console.log(err.response.data);
 
     dispatch(asyncActionError());
-    toastr.error('Oops', 'Some thing went wrong, please try again');
+    toastr.error("Oops", "Some thing went wrong, please try again");
   }
 };
 
-export const logout = () => dispatch => {
-  localStorage.removeItem('token');
+export const logout = () => (dispatch) => {
+  localStorage.removeItem("token");
   dispatch({ type: SET_AUTH_USER, payload: { user: {} } });
   dispatch({ type: LOGOUT });
 };
