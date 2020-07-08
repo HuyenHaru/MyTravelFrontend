@@ -7,6 +7,7 @@ import {
   fetchPost,
   likePost,
   unlikePost,
+  fetchPosts,
 } from '../post.actions';
 import { Container } from 'reactstrap';
 import Comments from './Comments';
@@ -29,7 +30,10 @@ const postAction = actionTypes.post;
 const PostDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { currentPost } = useSelector(state => state.post);
+  const {
+    currentPost,
+    posts: { docs: posts },
+  } = useSelector(state => state.post);
   const { loading, actionType, elmId } = useSelector(state => state.async);
   const { authUser, authenticated } = useSelector(state => state.user);
   const [comment, setComment] = useState('');
@@ -41,6 +45,11 @@ const PostDetail = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+
+  useEffect(() => {
+    dispatch(fetchPosts());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleDeleteComment = commentId =>
     dispatch(deletePostComment(id, commentId));
@@ -170,7 +179,7 @@ const PostDetail = () => {
             <Divider />
           </Col>
           <Col xs={24} sm={24} md={24} lg={6} xl={6}>
-            <Sidebar />
+            <Sidebar posts={posts} />
           </Col>
         </Row>
       </Container>
