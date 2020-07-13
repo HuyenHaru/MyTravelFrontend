@@ -483,3 +483,10 @@ a:hover {
   top: 10%;
   width: 92%;
 }
+
+.content-trip .ant-tabs-nav button {
+  outline: none !important;
+  text-transform: uppercase;
+  font-weight: 600 !important;
+  color: #209e91 !important;
+}
