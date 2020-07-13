@@ -12,6 +12,7 @@ import {
   Divider,
   Row,
   Col,
+  Tabs,
 } from "antd";
 import { columnsTable } from "../../../app/utils/config";
 import { useDebounce } from "../../../app/Layout/common/CustomHook";
@@ -218,7 +219,7 @@ const MyTrip = () => {
     price: Math.round((Number(hotel.priceMin) + Number(hotel.priceMax)) / 2),
   }));
   const foods = prepareTableDataSource("foods", city);
-
+  const { TabPane } = Tabs;
   return (
     <div className="my-trip">
       <div className="module-banner">
