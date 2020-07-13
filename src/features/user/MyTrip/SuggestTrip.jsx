@@ -1,15 +1,15 @@
-import React, { useEffect, useState, Fragment } from "react";
-import { Form, Button, Spin, Select, Table, Typography, Divider } from "antd";
-import { useDebounce } from "../../../app/Layout/common/CustomHook";
-import axios from "axios";
-import { columnsTable } from "../../../app/utils/config";
+import React, { useEffect, useState, Fragment } from 'react';
+import { Form, Button, Spin, Select, Table, Typography, Divider } from 'antd';
+import { useDebounce } from '../../../app/Layout/common/CustomHook';
+import axios from 'axios';
+import { columnsTable } from '../../../app/utils/config';
 
 const { Option } = Select;
 const { Text } = Typography;
 
 const { columnsPlace } = columnsTable;
 
-const searchCity = async (keyWord) => {
+const searchCity = async keyWord => {
   let cities = [];
 
   try {
@@ -18,7 +18,7 @@ const searchCity = async (keyWord) => {
     );
     cities = await response.data.cities;
 
-    cities = cities.map((city) => ({
+    cities = cities.map(city => ({
       text: city.name,
       value: city.id,
     }));
@@ -33,13 +33,13 @@ const fetchSuggestTrip = async (city, placeIds) => {
   let places = [];
   let suggest = [];
 
-  placeIds = placeIds.join(", ");
+  placeIds = placeIds.join(', ');
 
   try {
     const response = await axios.post(
       `https://still-castle-31935.herokuapp.com/api/auth/suggest-trip/${city}`,
       { places: placeIds },
-      { headers: { "Content-Type": "application/json" } }
+      { headers: { 'Content-Type': 'application/json' } }
     );
     places = response.data.places;
     const matrixCostResult = response.data.matrixCostResult;
@@ -66,7 +66,7 @@ const fetchSuggestTrip = async (city, placeIds) => {
   return suggest;
 };
 
-const fetchCityData = async (city) => {
+const fetchCityData = async city => {
   let result = {};
 
   try {
@@ -85,7 +85,7 @@ const SuggestTrip = () => {
   const [form] = Form.useForm();
   const [cities, setCities] = useState([]);
   const [cityValue, setCityValue] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const debounceSearchTerm = useDebounce(searchTerm, 800);
   const [loadingCities, setLoadingCities] = useState(false);
   const [suggestTripLoading, setSuggestTripLoading] = useState(false);
@@ -99,7 +99,7 @@ const SuggestTrip = () => {
       setCities([]);
       setLoadingCities(true);
 
-      searchCity(debounceSearchTerm).then((cities) => {
+      searchCity(debounceSearchTerm).then(cities => {
         setCities(cities);
         setLoadingCities(false);
       });
@@ -111,21 +111,20 @@ const SuggestTrip = () => {
     setLoadingCity(true);
 
     fetchCityData(value)
-      .then((city) => {
+      .then(city => {
         setCity(city);
         setLoadingCity(false);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
         setLoadingCity(false);
       });
 
     setCityValue(value);
   };
-  const fetchCity = (value) => setSearchTerm(value);
-  const onSelectChange = (selectedRowKeys) =>
-    setSelectedRowKeys(selectedRowKeys);
-  const handleSuggestTrip = (values) => {
+  const fetchCity = value => setSearchTerm(value);
+  const onSelectChange = selectedRowKeys => setSelectedRowKeys(selectedRowKeys);
+  const handleSuggestTrip = values => {
     const {
       city: { value },
     } = values;
@@ -133,13 +132,13 @@ const SuggestTrip = () => {
     setSuggestTripLoading(true);
 
     fetchSuggestTrip(value, selectedRowKeys)
-      .then((places) => {
+      .then(places => {
         places.splice(-1, 1);
         setSuggestedPlaces(places);
         setSuggestTripLoading(false);
         setSelectedRowKeys([]);
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
         setSuggestTripLoading(false);
         setSelectedRowKeys([]);
@@ -155,28 +154,27 @@ const SuggestTrip = () => {
 
   const dataSourcePlaces =
     city && city.places
-      ? city.places.map((pl) => ({ ...pl.place, key: pl.place._id }))
+      ? city.places.map(pl => ({ ...pl.place, key: pl.place._id }))
       : [];
-
   return (
     <div>
       <Form form={form} onFinish={handleSuggestTrip}>
         <Form.Item
-          name="city"
-          rules={[{ required: true, message: "Vui lòng chọng một thành phố" }]}
+          name='city'
+          rules={[{ required: true, message: 'Vui lòng chọng một thành phố' }]}
         >
           <Select
             labelInValue
             value={cityValue}
-            placeholder="Select City"
+            placeholder='Select City'
             showSearch
-            notFoundContent={loadingCities ? <Spin size="small" /> : null}
+            notFoundContent={loadingCities ? <Spin size='small' /> : null}
             filterOption={false}
             onSearch={fetchCity}
             onChange={handleSelectCityChange}
-            style={{ width: "100%" }}
+            style={{ width: '100%' }}
           >
-            {cities.map((d) => (
+            {cities.map(d => (
               <Option key={d.value}>{d.text}</Option>
             ))}
           </Select>
@@ -184,8 +182,8 @@ const SuggestTrip = () => {
         {selectedRowKeys.length > 0 && (
           <Form.Item>
             <Button
-              type="primary"
-              htmlType="submit"
+              type='primary'
+              htmlType='submit'
               loading={suggestTripLoading}
             >
               Gợi ý lịch trình
@@ -210,19 +208,14 @@ const SuggestTrip = () => {
               pagination={false}
               columns={[
                 {
-                  title: "Điểm xuất phát",
-                  dataIndex: "from",
-                  key: "from",
+                  title: 'Điểm xuất phát',
+                  dataIndex: 'from',
+                  key: 'from',
                 },
                 {
-                  title: "Điểm dừng",
-                  dataIndex: "to",
-                  key: "to",
-                },
-                {
-                  title: "Chi phí đi lại",
-                  dataIndex: "cost",
-                  key: "cost",
+                  title: 'Điểm dừng',
+                  dataIndex: 'to',
+                  key: 'to',
                 },
               ]}
             />
