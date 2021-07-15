@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/MyTravelFrontend/static/css/main.82674f60.chunk.css",
-    "main.js": "/MyTravelFrontend/static/js/main.72d6d8ee.chunk.js",
-    "main.js.map": "/MyTravelFrontend/static/js/main.72d6d8ee.chunk.js.map",
+    "main.css": "/MyTravelFrontend/static/css/main.ca70f65b.chunk.css",
+    "main.js": "/MyTravelFrontend/static/js/main.64189341.chunk.js",
+    "main.js.map": "/MyTravelFrontend/static/js/main.64189341.chunk.js.map",
     "runtime~main.js": "/MyTravelFrontend/static/js/runtime~main.7aaea2c1.js",
     "runtime~main.js.map": "/MyTravelFrontend/static/js/runtime~main.7aaea2c1.js.map",
-    "static/css/2.b5f95409.chunk.css": "/MyTravelFrontend/static/css/2.b5f95409.chunk.css",
-    "static/js/2.1976b172.chunk.js": "/MyTravelFrontend/static/js/2.1976b172.chunk.js",
-    "static/js/2.1976b172.chunk.js.map": "/MyTravelFrontend/static/js/2.1976b172.chunk.js.map",
+    "static/css/2.37d9e2d1.chunk.css": "/MyTravelFrontend/static/css/2.37d9e2d1.chunk.css",
+    "static/js/2.770e557c.chunk.js": "/MyTravelFrontend/static/js/2.770e557c.chunk.js",
+    "static/js/2.770e557c.chunk.js.map": "/MyTravelFrontend/static/js/2.770e557c.chunk.js.map",
     "index.html": "/MyTravelFrontend/index.html",
-    "precache-manifest.fb720bc1f4f5217c90b1552fde4db14a.js": "/MyTravelFrontend/precache-manifest.fb720bc1f4f5217c90b1552fde4db14a.js",
+    "precache-manifest.4f08b6a8e42980855dd87c96b307d4bf.js": "/MyTravelFrontend/precache-manifest.4f08b6a8e42980855dd87c96b307d4bf.js",
     "service-worker.js": "/MyTravelFrontend/service-worker.js",
-    "static/css/2.b5f95409.chunk.css.map": "/MyTravelFrontend/static/css/2.b5f95409.chunk.css.map",
-    "static/css/main.82674f60.chunk.css.map": "/MyTravelFrontend/static/css/main.82674f60.chunk.css.map",
+    "static/css/2.37d9e2d1.chunk.css.map": "/MyTravelFrontend/static/css/2.37d9e2d1.chunk.css.map",
+    "static/css/main.ca70f65b.chunk.css.map": "/MyTravelFrontend/static/css/main.ca70f65b.chunk.css.map",
     "static/media/style.css": "/MyTravelFrontend/static/media/hue.ce324410.jpg"
   }
 }
