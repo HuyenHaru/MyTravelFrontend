@@ -54,7 +54,11 @@ const Home = () => {
             <Container>
               <Row>
                 <Col lg={12} md={12} sm={12} xs={24}>
-                  <img src="./assets/images/gioithieu.JPG" alt="" />
+                  <img
+                    className="img-respon"
+                    src="./assets/images/gioithieu.JPG"
+                    alt=""
+                  />
                 </Col>
                 <Col lg={12} md={12} sm={12} xs={24}>
                   <div className="content-gt">
